@@ -1,19 +1,27 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using VideoGameApp.Data;
+using VideoGameApp.Models;
 
 namespace VideoGameApp.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly AppDbContext _db;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(AppDbContext db)
     {
-        _logger = logger;
+        _db = db;
     }
 
-    public void OnGet()
-    {
+    public List<Game> Games { get; private set; } = new();
 
+    public async Task OnGetAsync()
+    {
+        Games = await _db.Games
+            .Include(g => g.Genre)
+            .Include(g => g.Studio)
+            .OrderBy(g => g.Title)
+            .ToListAsync();
     }
 }
