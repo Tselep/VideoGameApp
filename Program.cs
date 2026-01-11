@@ -1,4 +1,6 @@
+using VideoGameApp.Data;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,8 +47,4 @@ app.MapGet("/health", () => Results.Ok(new { status = "OK" }));
 
 app.Run();
 
-// NOTE: Day 2 will move entities + DbSets here.
-public class AppDbContext : DbContext
-{
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-}
+
