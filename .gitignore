@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# SQLite
+videogameapp.db
+videogameapp.db-shm
+videogameapp.db-wal
+
+# Rider / IDE
+.idea/
+
+# Build output
+bin/
+obj/
+TseleStationStore/
