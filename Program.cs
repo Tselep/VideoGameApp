@@ -1,5 +1,7 @@
 using VideoGameApp.Data;
+using VideoGameApp.Data.Seed;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,7 @@ builder.Services.AddSwaggerGen();
 // SQLite (single-file DB, good for GitHub clone-and-run)
 // Uses appsettings.json if present, otherwise falls back to a local file.
 var cs = builder.Configuration.GetConnectionString("DefaultConnection")
-         ?? "Data Source=videogameapp.db";
+         ?? $"Data Source={Path.Combine(builder.Environment.ContentRootPath, "videogameapp.db")}";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(cs));
@@ -27,6 +29,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+    SeedData.EnsureSeeded(db);
 }
 
 if (app.Environment.IsDevelopment())
@@ -36,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 
 app.UseAuthorization();
 
@@ -46,5 +51,3 @@ app.MapRazorPages();
 app.MapGet("/health", () => Results.Ok(new { status = "OK" }));
 
 app.Run();
-
-

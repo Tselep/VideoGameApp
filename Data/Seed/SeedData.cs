@@ -6,26 +6,31 @@ public static class SeedData
 {
     public static void EnsureSeeded(AppDbContext db)
     {
-        if (db.Genres.Any() || db.Studios.Any() || db.Games.Any())
+        // Seed Genres (only if empty)
+        if (!db.Genres.Any())
+        {
+            db.Genres.AddRange(
+                new Genre { Name = "Action" },
+                new Genre { Name = "RPG" },
+                new Genre { Name = "Sports" }
+            );
+            db.SaveChanges();
+        }
+
+        // Seed Studios (only if empty)
+        if (!db.Studios.Any())
+        {
+            db.Studios.AddRange(
+                new Studio { Name = "Naughty Dog", Country = "USA" },
+                new Studio { Name = "CD Projekt", Country = "Poland" },
+                new Studio { Name = "EA Sports", Country = "USA" }
+            );
+            db.SaveChanges();
+        }
+
+        // Seed Games (only if empty)
+        if (db.Games.Any())
             return;
-
-        var genres = new[]
-        {
-            new Genre { Name = "Action" },
-            new Genre { Name = "RPG" },
-            new Genre { Name = "Sports" }
-        };
-
-        var studios = new[]
-        {
-            new Studio { Name = "Naughty Dog", Country = "USA" },
-            new Studio { Name = "CD Projekt", Country = "Poland" },
-            new Studio { Name = "EA Sports", Country = "USA" }
-        };
-
-        db.Genres.AddRange(genres);
-        db.Studios.AddRange(studios);
-        db.SaveChanges();
 
         var action = db.Genres.First(g => g.Name == "Action").Id;
         var rpg = db.Genres.First(g => g.Name == "RPG").Id;
