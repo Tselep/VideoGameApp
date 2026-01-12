@@ -1,35 +1,70 @@
 ﻿@page
 @model VideoGameApp.Pages.IndexModel
-@{
-    ViewData["Title"] = "Home";
-}
+@{ ViewData["Title"] = "Home"; }
 
-<div class="text-center">
+<div class="text-center mb-4">
     <h1 class="display-4">VideoGameApp</h1>
-    <p class="lead">Games loaded from SQLite</p>
+    <p class="lead">Manage games, genres and studios (SQLite + EF Core)</p>
 </div>
 
-@if (Model.Games == null || Model.Games.Count == 0)
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Games</h5>
+                <p class="display-6 mb-0">@Model.GamesCount</p>
+                <p class="text-muted mb-0">total records</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Genres</h5>
+                <p class="display-6 mb-0">@Model.GenresCount</p>
+                <p class="text-muted mb-0">total records</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Studios</h5>
+                <p class="display-6 mb-0">@Model.StudiosCount</p>
+                <p class="text-muted mb-0">total records</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-wrap gap-2 mb-4">
+    <a class="btn btn-primary" asp-page="/Games/Index">Go to Games</a>
+    <a class="btn btn-outline-primary" asp-page="/Genres/Index">Go to Genres</a>
+    <a class="btn btn-outline-primary" asp-page="/Studios/Index">Go to Studios</a>
+</div>
+
+@if (Model.RecentGames.Count == 0)
 {
     <div class="alert alert-warning">
-        No games found. If you just added seed data, delete <code>videogameapp.db</code> and restart the app.
+        No games found yet.
     </div>
 }
 else
 {
+    <h2 class="h5 mb-2">Recently added games</h2>
     <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
+        <table class="table table-striped align-middle">
             <thead>
-            <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Studio</th>
-                <th class="text-end">Price</th>
-                <th>Release Date</th>
-            </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Studio</th>
+                    <th class="text-end">Price</th>
+                    <th>Release Date</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var g in Model.Games)
+            @foreach (var g in Model.RecentGames)
             {
                 <tr>
                     <td>@g.Title</td>
