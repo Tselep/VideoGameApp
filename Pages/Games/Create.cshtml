@@ -1,0 +1,51 @@
+@page
+@model VideoGameApp.Pages.Games.CreateModel
+
+<h1 class="display-6 mb-3">Create Game</h1>
+
+<form method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Game.Title" class="form-label"></label>
+        <input asp-for="Game.Title" class="form-control" />
+        <span asp-validation-for="Game.Title" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Game.Price" class="form-label"></label>
+        <input asp-for="Game.Price" class="form-control" />
+        <span asp-validation-for="Game.Price" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Game.ReleaseDate" class="form-label"></label>
+        <input asp-for="Game.ReleaseDate" class="form-control" type="date" />
+        <span asp-validation-for="Game.ReleaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Game.GenreId" class="form-label">Genre</label>
+        <select asp-for="Game.GenreId" class="form-select" asp-items="Model.GenreOptions">
+            <option value="">-- select genre --</option>
+        </select>
+        <span asp-validation-for="Game.GenreId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Game.StudioId" class="form-label">Studio</label>
+        <select asp-for="Game.StudioId" class="form-select" asp-items="Model.StudioOptions">
+            <option value="">-- select studio --</option>
+        </select>
+        <span asp-validation-for="Game.StudioId" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-outline-secondary" asp-page="Index">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

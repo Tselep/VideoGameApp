@@ -1,0 +1,23 @@
+@page "{id:int}"
+@model VideoGameApp.Pages.Games.DeleteModel
+
+<h1 class="display-6 mb-3 text-danger">Delete Game</h1>
+
+<p>Are you sure you want to delete this game?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Title</dt>
+    <dd class="col-sm-9">@Model.Game.Title</dd>
+
+    <dt class="col-sm-3">Genre</dt>
+    <dd class="col-sm-9">@Model.Game.Genre?.Name</dd>
+
+    <dt class="col-sm-3">Studio</dt>
+    <dd class="col-sm-9">@Model.Game.Studio?.Name</dd>
+</dl>
+
+<form method="post">
+    <input type="hidden" asp-for="Game.Id" />
+    <button class="btn btn-danger" type="submit">Yes, delete</button>
+    <a class="btn btn-outline-secondary" asp-page="Index">Cancel</a>
+</form>
