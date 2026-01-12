@@ -1,0 +1,23 @@
+@page
+@model VideoGameApp.Pages.Genres.CreateModel
+
+<h1 class="display-6 mb-3">Create Genre</h1>
+
+<form method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Genre.Name" class="form-label"></label>
+        <input asp-for="Genre.Name" class="form-control" />
+        <span asp-validation-for="Genre.Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

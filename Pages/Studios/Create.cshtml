@@ -1,0 +1,29 @@
+@page
+@model VideoGameApp.Pages.Studios.CreateModel
+
+<h1 class="display-6 mb-3">Create Studio</h1>
+
+<form method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Studio.Name" class="form-label"></label>
+        <input asp-for="Studio.Name" class="form-control" />
+        <span asp-validation-for="Studio.Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Studio.Country" class="form-label"></label>
+        <input asp-for="Studio.Country" class="form-control" />
+        <span asp-validation-for="Studio.Country" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
