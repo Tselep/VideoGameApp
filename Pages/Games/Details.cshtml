@@ -17,7 +17,7 @@
     <dd class="col-sm-9">@Model.Game.Price</dd>
 
     <dt class="col-sm-3">Release Date</dt>
-    <dd class="col-sm-9">@Model.Game.ReleaseDate.ToString("yyyy-MM-dd")</dd>
+    <dd class="col-sm-9">@(Model.Game.ReleaseDate.HasValue ? Model.Game.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</dd>
 </dl>
 
 <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@Model.Game.Id">Edit</a>

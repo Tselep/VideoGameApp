@@ -26,7 +26,7 @@
             <td>@g.Genre?.Name</td>
             <td>@g.Studio?.Name</td>
             <td class="text-end">@g.Price</td>
-            <td>@g.ReleaseDate.ToString("yyyy-MM-dd")</td>
+            <td>@(g.ReleaseDate.HasValue ? g.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</td>
             <td class="text-end">
                 <a class="btn btn-sm btn-outline-secondary" asp-page="Details" asp-route-id="@g.Id">Details</a>
                 <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">Edit</a>
