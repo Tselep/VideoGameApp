@@ -8,10 +8,9 @@ videogameapp.db-wal
 
 # Rider / IDE
 .idea/
+*.DotSettings.user
 
 # Build output
 bin/
 obj/
 TseleStationStore/
-
-*.DotSettings.user
