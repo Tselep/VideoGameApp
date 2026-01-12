@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using VideoGameApp.Data;
 using VideoGameApp.Data.Seed;
 using VideoGameApp.Infrastructure;
