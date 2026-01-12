@@ -2,7 +2,14 @@
 @model VideoGameApp.Pages.Genres.IndexModel
 
 <h1 class="display-6 mb-3">Genres</h1>
-
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger">@err</div>
+}
+@if (TempData["Success"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
 <p>
     <a class="btn btn-primary" asp-page="./Create">Create New Genre</a>
 </p>

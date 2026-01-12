@@ -4,7 +4,12 @@
 <h1 class="display-6 mb-3 text-danger">Delete Genre</h1>
 
 <p>Are you sure you want to delete this genre?</p>
-
+@if (Model.IsInUse)
+{
+    <div class="alert alert-warning mt-3">
+        Δεν μπορεί να διαγραφεί αυτό το Genre γιατί χρησιμοποιείται από υπάρχοντα Games.
+    </div>
+}
 <dl class="row">
     <dt class="col-sm-3">Name</dt>
     <dd class="col-sm-9">@Model.Genre.Name</dd>
@@ -12,6 +17,6 @@
 
 <form method="post">
     <input type="hidden" asp-for="Genre.Id" />
-    <button class="btn btn-danger" type="submit">Yes, delete</button>
+    <button class="btn btn-danger" type="submit" @(Model.IsInUse ? "disabled" : "")>Yes, delete</button>
     <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
 </form>
