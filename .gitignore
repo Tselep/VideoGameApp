@@ -13,3 +13,5 @@ videogameapp.db-wal
 bin/
 obj/
 TseleStationStore/
+
+*.DotSettings.user
