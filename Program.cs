@@ -1,21 +1,28 @@
-using VideoGameApp.Data;
-using VideoGameApp.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-
+using VideoGameApp.Data;
+using VideoGameApp.Data.Seed;
+using VideoGameApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // MVC / Controllers (Web API)
-builder.Services.AddControllers();
-builder.Services.AddRazorPages();
+builder.Services.AddControllers().AddMvcOptions(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
+
+// Razor Pages
+builder.Services.AddRazorPages().AddMvcOptions(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// SQLite (single-file DB, good for GitHub clone-and-run)
-// Uses appsettings.json if present, otherwise falls back to a local file.
+// SQLite (single-file DB)
 var cs = builder.Configuration.GetConnectionString("DefaultConnection")
          ?? $"Data Source={Path.Combine(builder.Environment.ContentRootPath, "videogameapp.db")}";
 
