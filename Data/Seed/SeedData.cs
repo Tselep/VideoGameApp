@@ -1,4 +1,10 @@
+
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using VideoGameApp.Models;
+
 
 namespace VideoGameApp.Data.Seed;
 
@@ -68,5 +74,50 @@ public static class SeedData
         );
 
         db.SaveChanges();
+    }
+
+    public static void EnsureIdentitySeeded(IServiceProvider services)
+    {
+        using var scope = services.CreateScope();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+        // Roles
+        var roles = new[] { "Admin", "User" };
+        foreach (var role in roles)
+        {
+            if (!roleManager.RoleExistsAsync(role).GetAwaiter().GetResult())
+            {
+                roleManager.CreateAsync(new IdentityRole(role)).GetAwaiter().GetResult();
+            }
+        }
+
+        // Default Admin
+        const string adminEmail = "admin@admin.com";
+        const string adminPassword = "Admin123!";
+
+        var adminUser = userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
+        if (adminUser == null)
+        {
+            adminUser = new ApplicationUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+
+            var createResult = userManager.CreateAsync(adminUser, adminPassword).GetAwaiter().GetResult();
+            if (!createResult.Succeeded)
+            {
+                var errors = string.Join("; ", createResult.Errors.Select(e => e.Description));
+                throw new InvalidOperationException($"Failed to create default admin user: {errors}");
+            }
+        }
+
+        // Ensure Admin role
+        if (!userManager.IsInRoleAsync(adminUser, "Admin").GetAwaiter().GetResult())
+        {
+            userManager.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
+        }
     }
 }

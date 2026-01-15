@@ -1,11 +1,12 @@
 @page
 @model VideoGameApp.Pages.Games.IndexModel
-
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a class="btn btn-primary" asp-page="Create">Create New Game</a>
+    </p>
+}
 <h1 class="display-6 mb-3">Games</h1>
-
-<p>
-    <a class="btn btn-primary" asp-page="Create">Create New Game</a>
-</p>
 
 <table class="table table-striped table-hover align-middle">
     <thead>
@@ -29,8 +30,12 @@
             <td>@(g.ReleaseDate.HasValue ? g.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</td>
             <td class="text-end">
                 <a class="btn btn-sm btn-outline-secondary" asp-page="Details" asp-route-id="@g.Id">Details</a>
-                <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">Edit</a>
-                <a class="btn btn-sm btn-outline-danger" asp-page="Delete" asp-route-id="@g.Id">Delete</a>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-page="Delete" asp-route-id="@g.Id">Delete</a>
+                }
             </td>
         </tr>
     }

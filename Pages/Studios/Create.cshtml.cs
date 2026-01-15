@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VideoGameApp.Data;
@@ -5,6 +6,7 @@ using VideoGameApp.Models;
 
 namespace VideoGameApp.Pages.Studios;
 
+[Authorize(Roles = "Admin")]
 public class CreateModel : PageModel
 {
     private readonly AppDbContext _db;
