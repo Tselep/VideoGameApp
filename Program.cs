@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VideoGameApp.Data;
 using VideoGameApp.Data.Seed;
 using VideoGameApp.Infrastructure;
+using VideoGameApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,25 @@ var cs = builder.Configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(cs));
 
+// Identity (Authentication/Authorization)
+builder.Services
+    .AddDefaultIdentity<ApplicationUser>(options =>
+    {
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireDigit = false;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
 var app = builder.Build();
 
 // Auto-create / update DB schema on startup (applies migrations if they exist)
@@ -48,6 +69,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
