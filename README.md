@@ -1,84 +1,126 @@
 # 🎮 VideoGameApp
 
-A web application for managing video games, genres and studios, built with ASP.NET Core Razor Pages, Entity Framework Core and SQLite.
+Final project for **Coding Factory 8**.  
+This application is a **Video Game Management System** built with ASP.NET Core Razor Pages, Entity Framework Core, and SQLite.
 
-The application demonstrates a complete domain model with relationships, CRUD functionality and basic business rules.
+It implements full **CRUD functionality**, **Authentication / Authorization**, **Role-based access control**, and basic business rules.
 
 ---
 
-## 🧱 Domain Model
+## 🧱 Technologies
+- ASP.NET Core (.NET 8)
+- Razor Pages (Server-Side Rendering)
+- Entity Framework Core
+- SQLite
+- ASP.NET Core Identity
+- Bootstrap 5
 
-The application is based on the following entities:
+---
 
-- **Game**
-- **Genre**
-- **Studio**
+## 📐 Architecture
+The application follows a layered architecture:
 
-### Relationships
-- Each **Game** belongs to one **Genre**
-- Each **Game** belongs to one **Studio**
+- **Domain Models** (Game, Genre, Studio)
+- **Data Access Layer** (EF Core / DbContext)
+- **Infrastructure / Services**
+- **Presentation Layer** (Razor Pages)
 
-Entity relationships are implemented using **Foreign Keys** and **Navigation Properties** with Entity Framework Core.
+The database is created using a **Model-First approach** via EF Core migrations.
+
+---
+
+## 📊 Domain Model
+The application manages:
+- **Games**
+- **Genres**
+- **Studios**
+
+### Relationships:
+- Each Game belongs to **one Genre**
+- Each Game belongs to **one Studio**
+
+### Business Rules:
+- A Genre or Studio cannot be deleted if it is used by any Game
+- Appropriate validation messages are displayed in the UI
+
+---
+
+## 🔐 Authentication & Authorization
+
+The application uses **ASP.NET Core Identity** for authentication and role-based authorization.
+
+### Authentication
+Supported features:
+- User Registration
+- User Login / Logout
+- Cookie-based authentication
+- Secure password hashing (ASP.NET Core Identity)
+
+Identity UI endpoints:
+- `/Identity/Account/Register`
+- `/Identity/Account/Login`
+- `/Identity/Account/Logout`
+
+Navigation links (Login / Register / Logout) are displayed dynamically in the navbar based on the user’s authentication state.
+
+---
+
+### Authorization (Roles)
+
+The application defines two roles:
+- `Admin`
+- `User`
+
+#### Default Admin User
+At application startup, a default admin user is automatically seeded:
+- **Email:** `admin@admin.com`
+- **Password:** `Admin123!`
+- **Role:** `Admin`
+
+---
+
+### Role-based Access Control
+
+| Action | User | Admin |
+|------|------|-------|
+| View lists & details | ✅ | ✅ |
+| Create entities | ❌ | ✅ |
+| Edit entities | ❌ | ✅ |
+| Delete entities | ❌ | ✅ |
+
+Access control is enforced:
+- **Backend:** `[Authorize(Roles = "Admin")]` on Create/Edit/Delete Razor Pages
+- **Frontend:** Create/Edit/Delete buttons are hidden for non-admin users
+
+Even if a non-authorized user attempts to access protected URLs directly, they are redirected to **Access Denied**.
 
 ---
 
 ## 🗄️ Database
+The application uses **SQLite** (single-file database).
 
-- **SQLite** database
-- **Entity Framework Core (Code First)**
-- Migrations are applied automatically on startup
-- The database is created automatically if it does not exist
-- Initial seed data is inserted
+Database file:
+- `videogameapp.db`
 
----
+The database includes:
+- Domain tables (Games, Genres, Studios)
+- Identity tables:
+  - `AspNetUsers`
+  - `AspNetRoles`
+  - `AspNetUserRoles`
+  - `AspNetUserClaims`
+  - and others
 
-## ⚙️ Functionality
-
-### CRUD Operations
-The application supports full CRUD functionality for:
-
-- Games
-- Genres
-- Studios
-
-### Business Rules
-- A **Genre** or **Studio** cannot be deleted if it is referenced by existing Games
-- Friendly warning messages are shown instead of database errors
-- Delete actions are disabled in the UI when an entity is in use
+EF Core migrations are applied automatically at startup.
 
 ---
 
-## 🏠 Home Page (Dashboard)
-
-The home page provides an overview of the application:
-
-- Total number of Games
-- Total number of Genres
-- Total number of Studios
-- List of recently added Games
-- Quick navigation buttons
-
----
-
-## 🖥️ Technologies Used
-
-- ASP.NET Core Razor Pages
-- Entity Framework Core
-- SQLite
-- Bootstrap 5
-- C#
-
----
-
-## ▶️ Build & Run (Local)
+## ▶️ Build & Run
 
 ### Prerequisites
-- .NET SDK 7.0 or newer
+- .NET SDK 8.0+
 
-### Steps
-
+### Run the application
 ```bash
-git clone https://github.com/Tselep/VideoGameApp.git
-cd VideoGameApp
 dotnet restore
 dotnet run
