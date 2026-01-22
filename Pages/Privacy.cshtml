@@ -3,36 +3,132 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<><h1>Privacy Policy</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="mb-4">
+                <h1 class="display-6 mb-2">Privacy Policy</h1>
+                <p class="text-muted mb-0">
+                    Last updated: <strong>January 22, 2026</strong>
+                </p>
+                <p class="mt-3">
+                    This Privacy Policy explains how <strong>TseleStation Store</strong> (“we”, “us”) processes personal data
+                    when you use this application. This project was developed for educational purposes as part of the
+                    Coding Factory program.
+                </p>
+            </div>
 
-    <p>
-        The <strong>TseleStation Store</strong> respects your privacy and is committed
-        to protecting your personal data.
-    </p>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h5 mb-3">Quick summary</h2>
+                    <ul class="mb-0">
+                        <li>We collect only the minimum information required for authentication (e.g., email).</li>
+                        <li>Administrative actions are restricted to users with the <strong>Admin</strong> role.</li>
+                        <li>Application data is stored locally in SQLite and is not sold or shared with third parties.</li>
+                    </ul>
+                </div>
+            </div>
 
-    <h5>Data Collection</h5>
-    <p>
-        This application collects only the minimum required user information
-        (such as email address) for authentication and authorization purposes.
-    </p>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h5 mb-3">Table of contents</h2>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-sm btn-outline-secondary" href="#data-we-collect">Data we collect</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#how-we-use-data">How we use data</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#authentication">Authentication & authorization</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#storage">Storage & retention</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#security">Security</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#your-rights">Your rights</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#contact">Contact</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#changes">Changes</a>
+                    </div>
+                </div>
+            </div>
 
-    <h5>Authentication & Authorization</h5>
-    <p>
-        User authentication is handled via ASP.NET Core Identity.
-        Administrative actions (create, edit, delete) are restricted to users
-        with the <strong>Admin</strong> role.
-    </p>
+            <section id="data-we-collect" class="mb-4">
+                <h2 class="h4 mb-3">Data we collect</h2>
+                <p class="mb-2">
+                    We collect data you provide directly when creating an account or signing in.
+                </p>
+                <ul>
+                    <li><strong>Account data:</strong> email address and authentication-related identifiers used by ASP.NET Core Identity.</li>
+                    <li><strong>Application data:</strong> content you create in the app (e.g., games, genres, studios).</li>
+                </ul>
+                <p class="text-muted mb-0">
+                    We do not intentionally collect sensitive personal data.
+                </p>
+            </section>
 
-    <h5>Data Storage</h5>
-    <p>
-        All application data is stored locally using SQLite and is not shared
-        with third parties.
-    </p>
+            <section id="how-we-use-data" class="mb-4">
+                <h2 class="h4 mb-3">How we use data</h2>
+                <ul>
+                    <li>To create and manage user accounts.</li>
+                    <li>To authenticate users and control access to administrative features.</li>
+                    <li>To store and display application content (games, genres, studios).</li>
+                </ul>
+            </section>
 
-    <h5>Contact</h5>
-    <p>
-        This project was developed as part of the Coding Factory program
-        for educational purposes.
-    </p>
+            <section id="authentication" class="mb-4">
+                <h2 class="h4 mb-3">Authentication & authorization</h2>
+                <p>
+                    Authentication is handled via <strong>ASP.NET Core Identity</strong>. Certain actions (Create/Edit/Delete)
+                    are restricted to users in the <strong>Admin</strong> role.
+                </p>
+            </section>
+
+            <section id="storage" class="mb-4">
+                <h2 class="h4 mb-3">Storage & retention</h2>
+                <p class="mb-2">
+                    Data is stored locally using <strong>SQLite</strong>. We keep data only as long as needed for the
+                    functionality of this educational project.
+                </p>
+                <ul class="mb-0">
+                    <li><strong>Where:</strong> Local SQLite database on the hosting environment.</li>
+                    <li><strong>Sharing:</strong> We do not sell personal data and we do not share it with third parties.</li>
+                </ul>
+            </section>
+
+            <section id="security" class="mb-4">
+                <h2 class="h4 mb-3">Security</h2>
+                <p class="mb-0">
+                    We take reasonable measures to protect stored data. However, no method of storage or transmission is
+                    100% secure. Please use a strong password and do not reuse passwords from other services.
+                </p>
+            </section>
+
+            <section id="your-rights" class="mb-4">
+                <h2 class="h4 mb-3">Your rights</h2>
+                <p class="mb-2">
+                    Depending on your location, you may have rights such as access, correction, or deletion of your data.
+                    Since this is an educational project, requests may be handled on a best-effort basis.
+                </p>
+                <p class="mb-0">
+                    If you need help, contact us using the details below.
+                </p>
+            </section>
+
+            <section id="contact" class="mb-4">
+                <h2 class="h4 mb-3">Contact</h2>
+                <p class="mb-0">
+                    For questions about this Privacy Policy, please contact the project maintainer via the repository
+                    communication channels.
+                </p>
+            </section>
+
+            <section id="changes" class="mb-4">
+                <h2 class="h4 mb-3">Changes to this policy</h2>
+                <p class="mb-0">
+                    We may update this Privacy Policy from time to time. When we do, we will revise the “Last updated”
+                    date at the top of this page.
+                </p>
+            </section>
+
+            <hr class="my-4" />
+
+            <p class="text-muted small mb-0">
+                Disclaimer: This page is provided for educational/demo purposes and does not constitute legal advice.
+            </p>
+        </div>
+    </div>
+</div>
