@@ -14,7 +14,9 @@
     <dd class="col-sm-9">@Model.Game.Studio?.Name</dd>
 
     <dt class="col-sm-3">Price</dt>
-    <dd class="col-sm-9">@Model.Game.Price</dd>
+    <dd class="col-sm-9">
+        @($"{Model.Game.Price:0.00} €")
+    </dd>
 
     <dt class="col-sm-3">Release Date</dt>
     <dd class="col-sm-9">@(Model.Game.ReleaseDate.HasValue ? Model.Game.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</dd>

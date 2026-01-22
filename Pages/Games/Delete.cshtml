@@ -14,6 +14,11 @@
 
     <dt class="col-sm-3">Studio</dt>
     <dd class="col-sm-9">@Model.Game.Studio?.Name</dd>
+
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">
+        @($"{Model.Game.Price:0.00} €")
+    </dd>
 </dl>
 
 <form method="post">

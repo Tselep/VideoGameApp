@@ -70,7 +70,9 @@ else
                     <td>@g.Title</td>
                     <td>@(g.Genre?.Name ?? "-")</td>
                     <td>@(g.Studio?.Name ?? "-")</td>
-                    <td class="text-end">@g.Price.ToString("0.00")</td>
+                    <td class="text-end">
+                        @($"{g.Price:0.00} €")
+                    </td>
                     <td>@(g.ReleaseDate?.ToString("yyyy-MM-dd") ?? "-")</td>
                 </tr>
             }
