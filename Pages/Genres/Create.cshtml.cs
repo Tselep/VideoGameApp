@@ -17,12 +17,19 @@ public class CreateModel : PageModel
 
     public void OnGet() { }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
-        if (!ModelState.IsValid) return Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         _db.Genres.Add(Genre);
         await _db.SaveChangesAsync();
+
+        if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+        {
+            return LocalRedirect($"{returnUrl}?genreId={Genre.Id}");
+        }
+
         return RedirectToPage("./Index");
     }
 }

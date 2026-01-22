@@ -21,9 +21,16 @@ public class CreateModel : PageModel
     public SelectList GenreOptions { get; set; } = default!;
     public SelectList StudioOptions { get; set; } = default!;
 
-    public async Task OnGetAsync()
+    // Accept query params so when we return from Add Genre/Studio we can preselect them
+    public async Task OnGetAsync(int? genreId, int? studioId)
     {
         await LoadOptionsAsync();
+
+        if (genreId.HasValue)
+            Game.GenreId = genreId.Value;
+
+        if (studioId.HasValue)
+            Game.StudioId = studioId.Value;
     }
 
     public async Task<IActionResult> OnPostAsync()
