@@ -20,7 +20,11 @@
 
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+        <a class="btn btn-outline-secondary"
+           asp-page="./Index"
+           asp-route-returnUrl="@Request.Query["returnUrl"]">
+           Back
+        </a>
     </div>
 </form>
 
