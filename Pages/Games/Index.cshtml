@@ -18,6 +18,7 @@
         <th class="text-end">Price</th>
         <th>Release Date</th>
         <th class="text-end">Actions</th>
+        <th class="text-end">Buy</th>
     </tr>
     </thead>
     <tbody>
@@ -39,6 +40,16 @@
                     <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">Edit</a>
                     <a class="btn btn-sm btn-outline-danger" asp-page="Delete" asp-route-id="@g.Id">Delete</a>
                 }
+            </td>
+            <td class="text-end">
+                <form method="post" asp-page="/Cart/Add" class="d-inline">
+                    <input type="hidden" name="gameId" value="@g.Id" />
+                    <input type="hidden" name="title" value="@g.Title" />
+                    <input type="hidden" name="unitPrice" value="@g.Price" />
+                    <input type="hidden" name="imageUrl" value="" />
+                    <input type="hidden" name="qty" value="1" />
+                    <button type="submit" class="btn btn-sm btn-success">Add</button>
+                </form>
             </td>
         </tr>
     }
