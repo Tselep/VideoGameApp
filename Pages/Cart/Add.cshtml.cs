@@ -1,23 +1,34 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using VideoGameApp.Services.Cart;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using VideoGameApp.Models;
 
-namespace VideoGameApp.Pages.Cart;
+namespace VideoGameApp.Data;
 
-public class AddModel : PageModel
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
-    private readonly ICartService _cart;
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public AddModel(ICartService cart)
+    public DbSet<Game> Games => Set<Game>();
+    public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<Studio> Studios => Set<Studio>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        _cart = cart;
-    }
+        base.OnModelCreating(modelBuilder);
 
-    public IActionResult OnPost(int gameId, string title, decimal unitPrice, string? imageUrl, int qty = 1)
-    {
-        if (qty <= 0) qty = 1;
+        modelBuilder.Entity<Game>()
+            .Property(g => g.Title)
+            .HasMaxLength(200)
+            .IsRequired();
 
-        _cart.AddItem(gameId, title, unitPrice, imageUrl, qty);
-        return RedirectToPage("/Cart/Index");
+        modelBuilder.Entity<Genre>()
+            .Property(g => g.Name)
+            .HasMaxLength(100)
+            .IsRequired();
+
+        modelBuilder.Entity<Studio>()
+            .Property(s => s.Name)
+            .HasMaxLength(150)
+            .IsRequired();
     }
 }

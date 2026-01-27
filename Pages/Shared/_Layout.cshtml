@@ -33,11 +33,6 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Games/Index">Games</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-page="/Cart/Index">
-                            Cart <span class="badge bg-secondary ms-1">@Cart.GetTotalQuantity()</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Genres/Index">Genres</a>
                     </li>
                     <li class="nav-item">
@@ -49,6 +44,11 @@
                 </ul>
 
                 <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-2">
+                        <a class="nav-link text-dark" asp-page="/Cart/Index">
+                            Cart <span class="badge bg-secondary ms-1">@Cart.GetTotalQuantity()</span>
+                        </a>
+                    </li>
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="nav-item">

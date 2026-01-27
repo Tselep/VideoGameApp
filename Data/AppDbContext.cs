@@ -1,34 +1,29 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using VideoGameApp.Data;
 using VideoGameApp.Models;
 
-namespace VideoGameApp.Data;
+namespace VideoGameApp.Pages.Cart;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser>
+public class AddModel : PageModel
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    private readonly AppDbContext _db;
 
-    public DbSet<Game> Games => Set<Game>();
-    public DbSet<Genre> Genres => Set<Genre>();
-    public DbSet<Studio> Studios => Set<Studio>();
-    
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public AddModel(AppDbContext db)
     {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Game>()
-            .Property(g => g.Title)
-            .HasMaxLength(200)
-            .IsRequired();
+        _db = db;
+    }
 
-        modelBuilder.Entity<Genre>()
-            .Property(g => g.Name)
-            .HasMaxLength(100)
-            .IsRequired();
+    public IActionResult OnGet(int gameId)
+    {
+        var game = _db.Games.FirstOrDefault(g => g.Id == gameId);
+        if (game == null)
+        {
+            return NotFound();
+        }
 
-        modelBuilder.Entity<Studio>()
-            .Property(s => s.Name)
-            .HasMaxLength(150)
-            .IsRequired();
+        // Add game to cart logic here
+
+        return RedirectToPage("/Cart/Index");
     }
 }
