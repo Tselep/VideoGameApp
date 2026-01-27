@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 using VideoGameApp.Models.Cart;
 using VideoGameApp.Services.Cart;
+using System.Security.Claims;
+using VideoGameApp.Data;
+using VideoGameApp.Models.Orders;
 
 namespace VideoGameApp.Pages.Checkout;
 
@@ -10,10 +14,12 @@ namespace VideoGameApp.Pages.Checkout;
 public class IndexModel : PageModel
 {
     private readonly ICartService _cart;
+    private readonly AppDbContext _db;
 
-    public IndexModel(ICartService cart)
+    public IndexModel(ICartService cart, AppDbContext db)
     {
         _cart = cart;
+        _db = db;
     }
 
     public IReadOnlyList<CartItemDto> Items { get; private set; } = new List<CartItemDto>();
@@ -24,7 +30,7 @@ public class IndexModel : PageModel
         Items = _cart.GetItems();
         TotalPrice = _cart.GetTotalPrice();
 
-        // Allow showing success message after order even though cart is now empty
+        
         if (Items.Count == 0 && TempData.ContainsKey("Success") == false)
         {
             TempData["Info"] = "Your cart is empty.";
@@ -43,10 +49,30 @@ public class IndexModel : PageModel
             return RedirectToPage("/Cart/Index");
         }
 
-        // Complete purchase (temporary implementation)
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Challenge(); // should not happen because [Authorize]
+
+        var order = new Order
+        {
+            UserId = userId,
+            CreatedAtUtc = DateTime.UtcNow,
+            Total = items.Sum(i => i.UnitPrice * i.Quantity),
+            Items = items.Select(i => new OrderItem
+            {
+                GameId = i.GameId,
+                Title = i.Title,
+                UnitPrice = i.UnitPrice,
+                Quantity = i.Quantity
+            }).ToList()
+        };
+
+        _db.Orders.Add(order);
+        _db.SaveChanges();
+
         _cart.Clear();
 
-        TempData["Success"] = "Order placed successfully! Thank you for your purchase.";
-        return RedirectToPage("/Checkout/Index");
+        TempData["Success"] = $"Order #{order.Id} placed successfully!";
+        return RedirectToPage("/Orders/Details", new { id = order.Id });
     }
 }
