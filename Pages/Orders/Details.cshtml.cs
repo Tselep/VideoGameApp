@@ -22,7 +22,8 @@ public class DetailsModel : PageModel
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         Order = _db.Orders
-            .Include(o => o.Items)
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Game)
             .FirstOrDefault(o => o.Id == id && o.UserId == userId);
 
         if (Order is null) return NotFound();

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using VideoGameApp.Models;
 
 namespace VideoGameApp.Models.Orders;
 
@@ -10,6 +11,7 @@ public class OrderItem
     public Order Order { get; set; } = null!;
 
     public int GameId { get; set; }
+    public Game Game { get; set; } = null!;
 
     [Required]
     public string Title { get; set; } = "";

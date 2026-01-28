@@ -11,7 +11,7 @@ public class Order
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
-    public decimal Total { get; set; }
+    public decimal TotalPrice { get; set; }
 
-    public List<OrderItem> Items { get; set; } = new();
+    public List<OrderItem> OrderItems { get; set; } = new();
 }

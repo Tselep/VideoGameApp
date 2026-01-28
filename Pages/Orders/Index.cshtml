@@ -1,0 +1,41 @@
+@page
+@model VideoGameApp.Pages.Orders.IndexModel
+
+<h1>My Orders</h1>
+
+@if (!Model.Orders.Any())
+{
+    <div class="alert alert-info">
+        You have no orders yet.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.CreatedAtUtc</td>
+                <td>@order.TotalPrice</td>
+                <td>
+                    <a class="btn btn-sm btn-primary"
+                       asp-page="/Orders/Details"
+                       asp-route-id="@order.Id">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

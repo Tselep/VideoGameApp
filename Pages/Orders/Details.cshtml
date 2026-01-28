@@ -14,10 +14,10 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var it in Model.Order!.Items)
+    @foreach (var it in Model.Order!.OrderItems)
     {
         <tr>
-            <td>@it.Title</td>
+            <td>@it.Game.Title</td>
             <td class="text-end">@it.UnitPrice</td>
             <td class="text-end">@it.Quantity</td>
             <td class="text-end">@(@it.UnitPrice * it.Quantity)</td>
@@ -27,7 +27,7 @@
 </table>
 
 <div class="fs-5 text-end">
-    <strong>Total: @Model.Order!.Total</strong>
+    <strong>Total: @Model.Order!.TotalPrice</strong>
 </div>
 
 <a class="btn btn-outline-primary mt-3" asp-page="/Games/Index">Continue shopping</a>

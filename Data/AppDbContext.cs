@@ -37,13 +37,13 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .IsRequired();
         
         modelBuilder.Entity<Order>()
-            .HasMany(o => o.Items)
+            .HasMany(o => o.OrderItems)
             .WithOne(i => i.Order)
             .HasForeignKey(i => i.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Order>()
-            .Property(o => o.Total)
+            .Property(o => o.TotalPrice)
             .HasPrecision(18, 2);
 
         modelBuilder.Entity<OrderItem>()

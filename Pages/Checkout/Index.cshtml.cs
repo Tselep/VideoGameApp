@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
 using VideoGameApp.Models.Cart;
 using VideoGameApp.Services.Cart;
 using System.Security.Claims;
@@ -57,8 +56,8 @@ public class IndexModel : PageModel
         {
             UserId = userId,
             CreatedAtUtc = DateTime.UtcNow,
-            Total = items.Sum(i => i.UnitPrice * i.Quantity),
-            Items = items.Select(i => new OrderItem
+            TotalPrice = items.Sum(i => i.UnitPrice * i.Quantity),
+            OrderItems = items.Select(i => new OrderItem
             {
                 GameId = i.GameId,
                 Title = i.Title,
