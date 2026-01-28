@@ -12,12 +12,9 @@ public class IndexModel : PageModel
 {
     private readonly AppDbContext _db;
 
-    public IndexModel(AppDbContext db)
-    {
-        _db = db;
-    }
+    public IndexModel(AppDbContext db) => _db = db;
 
-    public List<Order> Orders { get; set; } = new();
+    public List<Order> Orders { get; private set; } = new();
 
     public async Task OnGetAsync()
     {

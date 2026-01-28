@@ -1,5 +1,5 @@
 @page
-@model VideoGameApp.Pages.Checkout.IndexModel
+@model IndexModel
 
 @{
     ViewData["Title"] = "Checkout";
@@ -17,7 +17,7 @@
     <div class="alert alert-success">@ok</div>
     <a class="btn btn-primary" asp-page="/Games/Index">Continue shopping</a>
 }
-else if (!Model.Items.Any())
+else if (Model.Items is null || Model.Items.Count == 0)
 {
     <div class="alert alert-info">Your cart is empty.</div>
     <a class="btn btn-primary" asp-page="/Games/Index">Continue shopping</a>
@@ -27,32 +27,35 @@ else
     <table class="table align-middle">
         <thead>
         <tr>
-            <th>Game</th>
-            <th class="text-end">Price</th>
-            <th class="text-end">Qty</th>
-            <th class="text-end">Line total</th>
+        <th>Game</th>
+        <th class="text-end">Price</th>
+        <th class="text-end">Qty</th>
+        <th class="text-end">Line total</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var it in Model.Items)
-        {
-            <tr>
-                <td>@it.Title</td>
-                <td class="text-end">@it.UnitPrice</td>
-                <td class="text-end">@it.Quantity</td>
-                <td class="text-end">@(@it.UnitPrice * it.Quantity)</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    {
+        <tr>
+            <td>@it.Title</td>
+            <td class="text-end">€@it.UnitPrice.ToString("0.00")</td>
+            <td class="text-end">@it.Quantity</td>
+            <td class="text-end">€@((it.UnitPrice * it.Quantity).ToString("0.00"))</td>
+        </tr>
+    }
+    </tbody>
+        </table>
 
-    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
+        <a class="btn btn-outline-primary" asp-page="/Cart/Index">Back to cart</a>
+
         <div class="fs-5">
-            <span class="text-muted">Total:</span> <strong>@Model.TotalPrice</strong>
+        <span class="text-muted">Total:</span>
+        <strong>€@Model.TotalPrice.ToString("0.00")</strong>
         </div>
 
         <form method="post" asp-page-handler="PlaceOrder">
-            <button class="btn btn-success">Place order</button>
+        <button class="btn btn-success">Place order</button>
         </form>
-    </div>
+        </div>
 }

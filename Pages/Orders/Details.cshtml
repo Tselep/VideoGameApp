@@ -2,14 +2,16 @@
 @model VideoGameApp.Pages.Orders.DetailsModel
 
 <h1>Order #@Model.Order!.Id</h1>
-<p class="text-muted">Created: @Model.Order!.CreatedAtUtc</p>
+<p class="text-muted">
+    Created: @Model.Order!.CreatedAtUtc.ToLocalTime()
+</p>
 
 <table class="table">
     <thead>
     <tr>
         <th>Game</th>
         <th class="text-end">Price</th>
-        <th class="text-end">Qty</th>
+        <th class="text-end">Quantity</th>
         <th class="text-end">Line total</th>
     </tr>
     </thead>
@@ -18,16 +20,16 @@
     {
         <tr>
             <td>@it.Game.Title</td>
-            <td class="text-end">@it.UnitPrice</td>
+            <td class="text-end">€@it.UnitPrice.ToString("0.00")</td>
             <td class="text-end">@it.Quantity</td>
-            <td class="text-end">@(@it.UnitPrice * it.Quantity)</td>
+            <td class="text-end">€@((it.UnitPrice * it.Quantity).ToString("0.00"))</td>
         </tr>
     }
     </tbody>
 </table>
 
 <div class="fs-5 text-end">
-    <strong>Total: @Model.Order!.TotalPrice</strong>
+    <strong>Total: €@Model.Order!.TotalPrice.ToString("0.00")</strong>
 </div>
 
 <a class="btn btn-outline-primary mt-3" asp-page="/Games/Index">Continue shopping</a>

@@ -43,7 +43,7 @@ else
                             </div>
                         </div>
                     </td>
-                    <td class="text-end">@it.UnitPrice</td>
+                    <td class="text-end">€@it.UnitPrice.ToString("0.00")</td>
                     <td>
                         <form method="post" asp-page-handler="Update" class="d-flex gap-2">
                             <input type="hidden" name="gameId" value="@it.GameId" />
@@ -52,7 +52,7 @@ else
                         </form>
                         <div class="text-muted small mt-1">Set to 0 to remove</div>
                     </td>
-                    <td class="text-end">@(@it.UnitPrice * it.Quantity)</td>
+                    <td class="text-end">€@((it.UnitPrice * it.Quantity).ToString("0.00"))</td>
                     <td class="text-end">
                         <form method="post" asp-page-handler="Remove">
                             <input type="hidden" name="gameId" value="@it.GameId" />
@@ -73,10 +73,14 @@ else
             <a class="btn btn-outline-primary" asp-page="/Games/Index">Continue shopping</a>
         </div>
 
+        @{
+            var qty = Model.TotalQuantity;
+            var itemLabel = qty == 1 ? "item" : "items";
+        }
         <div class="text-end">
             <div class="fs-5">
-                <span class="text-muted">Total (@Model.TotalQuantity items):</span>
-                <strong>@Model.TotalPrice</strong>
+                <span class="text-muted">Total (@qty @itemLabel):</span>
+                <strong>€@Model.TotalPrice.ToString("0.00")</strong>
             </div>
             <a class="btn btn-success mt-2" asp-page="/Checkout/Index">Checkout</a>
         </div>

@@ -1,36 +1,37 @@
 @page
 @model VideoGameApp.Pages.Orders.IndexModel
 
+@{
+    ViewData["Title"] = "My Orders";
+}
+
 <h1>My Orders</h1>
 
-@if (!Model.Orders.Any())
+@if (Model.Orders.Count == 0)
 {
-    <div class="alert alert-info">
-        You have no orders yet.
-    </div>
+    <div class="alert alert-info">You have no orders yet.</div>
+    <a class="btn btn-primary" asp-page="/Games/Index">Start shopping</a>
 }
 else
 {
-    <table class="table">
+    <table class="table align-middle">
         <thead>
         <tr>
             <th>#</th>
             <th>Date</th>
-            <th>Total</th>
+            <th class="text-end">Total</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var order in Model.Orders)
+        @foreach (var o in Model.Orders)
         {
             <tr>
-                <td>@order.Id</td>
-                <td>@order.CreatedAtUtc</td>
-                <td>@order.TotalPrice</td>
-                <td>
-                    <a class="btn btn-sm btn-primary"
-                       asp-page="/Orders/Details"
-                       asp-route-id="@order.Id">
+                <td>@o.Id</td>
+                <td>@o.CreatedAtUtc.ToLocalTime()</td>
+                <td class="text-end">€@o.TotalPrice.ToString("0.00")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-primary" asp-page="/Orders/Details" asp-route-id="@o.Id">
                         Details
                     </a>
                 </td>
