@@ -27,10 +27,10 @@ else
     <table class="table align-middle">
         <thead>
         <tr>
-        <th>Game</th>
-        <th class="text-end">Price</th>
-        <th class="text-end">Qty</th>
-        <th class="text-end">Line total</th>
+            <th>Game</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">Quantity</th>
+            <th class="text-end">Subtotal</th>
         </tr>
         </thead>
         <tbody>
@@ -38,9 +38,9 @@ else
     {
         <tr>
             <td>@it.Title</td>
-            <td class="text-end">€@it.UnitPrice.ToString("0.00")</td>
+           <td class="text-end">@it.UnitPrice.ToString("0.00") €</td>
             <td class="text-end">@it.Quantity</td>
-            <td class="text-end">€@((it.UnitPrice * it.Quantity).ToString("0.00"))</td>
+            <td class="text-end">@((it.UnitPrice * it.Quantity).ToString("0.00")) €</td>
         </tr>
     }
     </tbody>
@@ -51,7 +51,7 @@ else
 
         <div class="fs-5">
         <span class="text-muted">Total:</span>
-        <strong>€@Model.TotalPrice.ToString("0.00")</strong>
+        <strong>@Model.TotalPrice.ToString("0.00") €</strong>
         </div>
 
         <form method="post" asp-page-handler="PlaceOrder">
