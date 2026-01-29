@@ -47,7 +47,7 @@ else
                     <td>
                         <form method="post" asp-page-handler="Update" class="d-flex gap-2">
                             <input type="hidden" name="gameId" value="@it.GameId" />
-                            <input class="form-control" type="number" name="qty" min="0" value="@it.Quantity" />
+                            <input class="form-control" type="number" name="Quantity" min="0" value="@it.Quantity" />
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         <div class="text-muted small mt-1">Set to 0 to remove</div>
