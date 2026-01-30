@@ -18,4 +18,62 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Cart\Add.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Cart\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Checkout\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Games\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Games\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Games\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Games\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Games\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Genres\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Genres\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Genres\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Genres\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Orders\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Orders\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Privacy.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_LoginPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Studios\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Studios\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Studios\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Studios\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Cart\Add.cshtml" />
+    <AdditionalFiles Include="Pages\Cart\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Checkout\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Error.cshtml" />
+    <AdditionalFiles Include="Pages\Games\Create.cshtml" />
+    <AdditionalFiles Include="Pages\Games\Delete.cshtml" />
+    <AdditionalFiles Include="Pages\Games\Details.cshtml" />
+    <AdditionalFiles Include="Pages\Games\Edit.cshtml" />
+    <AdditionalFiles Include="Pages\Games\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Genres\Create.cshtml" />
+    <AdditionalFiles Include="Pages\Genres\Delete.cshtml" />
+    <AdditionalFiles Include="Pages\Genres\Edit.cshtml" />
+    <AdditionalFiles Include="Pages\Genres\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Orders\Details.cshtml" />
+    <AdditionalFiles Include="Pages\Orders\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Privacy.cshtml" />
+    <AdditionalFiles Include="Pages\Shared\_Layout.cshtml" />
+    <AdditionalFiles Include="Pages\Shared\_LoginPartial.cshtml" />
+    <AdditionalFiles Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+    <AdditionalFiles Include="Pages\Studios\Create.cshtml" />
+    <AdditionalFiles Include="Pages\Studios\Delete.cshtml" />
+    <AdditionalFiles Include="Pages\Studios\Edit.cshtml" />
+    <AdditionalFiles Include="Pages\Studios\Index.cshtml" />
+    <AdditionalFiles Include="Pages\_ViewImports.cshtml" />
+    <AdditionalFiles Include="Pages\_ViewStart.cshtml" />
+  </ItemGroup>
+
 </Project>

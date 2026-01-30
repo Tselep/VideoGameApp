@@ -7,17 +7,7 @@
 
 <h1>Checkout</h1>
 
-@if (TempData["Info"] is string info)
-{
-    <div class="alert alert-info">@info</div>
-}
-
-@if (TempData["Success"] is string ok)
-{
-    <div class="alert alert-success">@ok</div>
-    <a class="btn btn-primary" asp-page="/Games/Index">Continue shopping</a>
-}
-else if (Model.Items is null || Model.Items.Count == 0)
+@if (Model.Items is null || Model.Items.Count == 0)
 {
     <div class="alert alert-info">Your cart is empty.</div>
     <a class="btn btn-primary" asp-page="/Games/Index">Continue shopping</a>

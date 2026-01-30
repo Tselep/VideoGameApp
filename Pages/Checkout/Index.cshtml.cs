@@ -30,7 +30,7 @@ public class IndexModel : PageModel
         TotalPrice = _cart.GetTotalPrice();
 
         
-        if (Items.Count == 0 && TempData.ContainsKey("Success") == false)
+        if (Items.Count == 0)
         {
             TempData["Info"] = "Your cart is empty.";
             return RedirectToPage("/Cart/Index");
@@ -72,6 +72,6 @@ public class IndexModel : PageModel
         _cart.Clear();
 
         TempData["Success"] = $"Order #{order.Id} placed successfully!";
-        return RedirectToPage("/Orders/Details", new { id = order.Id });
+        return RedirectToPage("/Index");
     }
 }

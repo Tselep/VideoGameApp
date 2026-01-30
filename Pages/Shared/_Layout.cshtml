@@ -39,42 +39,20 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Studios/Index">Studios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-page="/Orders/Index">My Orders</a>
+                        <a class="nav-link text-dark" asp-page="/Orders/Index">My Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ms-auto align-items-center">
+                <ul class="navbar-nav ms-auto flex-row align-items-center gap-2">
                     <li class="nav-item me-2">
                         <a class="nav-link text-dark" asp-page="/Cart/Index">
                             Cart <span class="badge bg-secondary ms-1">@Cart.GetTotalQuantity()</span>
                         </a>
                     </li>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">
-                                Hello @User.Identity?.Name!
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="d-flex align-items-center" asp-area="Identity" asp-page="/Account/Logout"
-                                  asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        </li>
-                    }
+                    <partial name="_LoginPartial" />
                 </ul>
             </div>
         </div>
@@ -105,7 +83,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container text-center">
-        &copy; @DateTime.Now.Year – TseleStation Store · 
+        &copy; @DateTime.Now.Year – TseleStation Store ·
         <a asp-page="/Privacy">Privacy Policy</a>
     </div>
 </footer>

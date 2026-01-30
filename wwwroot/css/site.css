@@ -29,3 +29,11 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Navbar / dropdowns: remove list bullets and spacing */
+ul.navbar-nav,
+ul.dropdown-menu {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
