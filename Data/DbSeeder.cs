@@ -9,7 +9,7 @@ public static class DbSeeder
     public static async Task SeedAsync(AppDbContext db)
     {
 
-        // Genres
+        
         var genreNames = new[]
         {
             "Action", "RPG", "Sports", "Adventure", "Strategy",
@@ -25,11 +25,10 @@ public static class DbSeeder
         }
         await db.SaveChangesAsync();
 
-        // Studios
+        
         var studiosToSeed = new (string Name, string Country)[]
         {
             ("Naughty Dog", "USA"),
-            ("CD Projekt", "Poland"),
             ("EA Sports", "USA"),
             ("Ubisoft", "France"),
             ("Rockstar Games", "USA"),
@@ -50,7 +49,7 @@ public static class DbSeeder
             }
             else if (string.IsNullOrWhiteSpace(existing.Country))
             {
-                existing.Country = country; // backfill
+                existing.Country = country; 
             }
         }
 
@@ -59,7 +58,7 @@ public static class DbSeeder
         var genres = await db.Genres.ToListAsync();
         var studios = await db.Studios.ToListAsync();
 
-        // +20 Games (δεν πειράζω τα 3 που έχεις, απλά προσθέτω)
+        
         var newGames = new List<Game>
         {
             new() { Title="God of War", Price=49.99m, ReleaseDate=new DateTime(2018,4,20), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Santa Monica Studio") },
@@ -90,10 +89,8 @@ public static class DbSeeder
             new() { Title="The Last of Us Part II", Price=29.99m, ReleaseDate=new DateTime(2020,6,19), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Naughty Dog") },
         };
 
-        // Σημείωση: Αν δεν υπάρχει "Sony Santa Monica" κλπ, το Pick θα κάνει fallback.
-        // Πρόσθεσε/άλλαξε titles/studios όπως θες.
-
-        // Πρόσθεσε μόνο όσα δεν υπάρχουν ήδη (με βάση Title)
+        
+        
         var existingTitles = await db.Games.Select(g => g.Title).ToListAsync();
         var toAdd = newGames.Where(g => !existingTitles.Contains(g.Title)).ToList();
 
@@ -106,13 +103,13 @@ public static class DbSeeder
 
     private static int Pick<T>(List<T> list, string name) where T : class
     {
-        // Προσπαθώ να βρω Name property αν υπάρχει
+        
         var prop = typeof(T).GetProperty("Name");
         var match = list.FirstOrDefault(x => (string?)prop?.GetValue(x) == name);
         if (match != null)
             return (int)typeof(T).GetProperty("Id")!.GetValue(match)!;
 
-        // fallback: πάρε το πρώτο
+        
         return (int)typeof(T).GetProperty("Id")!.GetValue(list.First())!;
     }
 }
