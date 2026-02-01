@@ -26,27 +26,34 @@ public static class DbSeeder
         await db.SaveChangesAsync();
 
         // Studios
-        var studioNames = new[]
+        var studiosToSeed = new (string Name, string Country)[]
         {
-            "Naughty Dog",
-            "CD Projekt",
-            "EA Sports",
-            "Ubisoft",
-            "Rockstar Games",
-            "FromSoftware",
-            "Santa Monica Studio",
-            "Insomniac Games",
-            "Guerrilla Games",
-            "Bethesda"
+            ("Naughty Dog", "USA"),
+            ("CD Projekt", "Poland"),
+            ("EA Sports", "USA"),
+            ("Ubisoft", "France"),
+            ("Rockstar Games", "USA"),
+            ("FromSoftware", "Japan"),
+            ("Santa Monica Studio", "USA"),
+            ("Insomniac Games", "USA"),
+            ("Guerrilla Games", "Netherlands"),
+            ("Bethesda", "USA")
         };
 
-        foreach (var name in studioNames)
+        foreach (var (name, country) in studiosToSeed)
         {
-            if (!await db.Studios.AnyAsync(s => s.Name == name))
+            var existing = await db.Studios.FirstOrDefaultAsync(s => s.Name == name);
+
+            if (existing == null)
             {
-                db.Studios.Add(new Studio { Name = name });
+                db.Studios.Add(new Studio { Name = name, Country = country });
+            }
+            else if (string.IsNullOrWhiteSpace(existing.Country))
+            {
+                existing.Country = country; // backfill
             }
         }
+
         await db.SaveChangesAsync();
 
         var genres = await db.Genres.ToListAsync();
@@ -55,12 +62,12 @@ public static class DbSeeder
         // +20 Games (δεν πειράζω τα 3 που έχεις, απλά προσθέτω)
         var newGames = new List<Game>
         {
-            new() { Title="God of War", Price=49.99m, ReleaseDate=new DateTime(2018,4,20), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Sony Santa Monica") },
+            new() { Title="God of War", Price=49.99m, ReleaseDate=new DateTime(2018,4,20), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Santa Monica Studio") },
             new() { Title="Elden Ring", Price=59.99m, ReleaseDate=new DateTime(2022,2,25), GenreId=Pick(genres,"RPG"), StudioId=Pick(studios,"FromSoftware") },
             new() { Title="Red Dead Redemption 2", Price=39.99m, ReleaseDate=new DateTime(2018,10,26), GenreId=Pick(genres,"Adventure"), StudioId=Pick(studios,"Rockstar Games") },
             new() { Title="Assassin's Creed Odyssey", Price=29.99m, ReleaseDate=new DateTime(2018,10,5), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Ubisoft") },
             new() { Title="F1 24", Price=69.99m, ReleaseDate=new DateTime(2024,5,31), GenreId=Pick(genres,"Racing"), StudioId=Pick(studios,"EA Sports") },
-            new() { Title="Gran Turismo 7", Price=59.99m, ReleaseDate=new DateTime(2022,3,4), GenreId=Pick(genres,"Racing"), StudioId=Pick(studios,"Sony Santa Monica") },
+            new() { Title="Gran Turismo 7", Price=59.99m, ReleaseDate=new DateTime(2022,3,4), GenreId=Pick(genres,"Racing"), StudioId=Pick(studios,"Santa Monica Studio") },
 
             new() { Title="Horizon Zero Dawn", Price=19.99m, ReleaseDate=new DateTime(2017,2,28), GenreId=Pick(genres,"Adventure"), StudioId=Pick(studios,"Ubisoft") },
             new() { Title="Ghost of Tsushima", Price=49.99m, ReleaseDate=new DateTime(2020,7,17), GenreId=Pick(genres,"Action"), StudioId=Pick(studios,"Naughty Dog") },
