@@ -37,3 +37,13 @@ ul.dropdown-menu {
   padding-left: 0;
   margin-bottom: 0;
 }
+
+/* Hide external login section (Microsoft Identity default UI) */
+section h3:has(+ hr) {
+  display: none;
+}
+
+section h3:has(+ hr) + hr,
+section h3:has(+ hr) ~ div {
+  display: none;
+}
