@@ -10,12 +10,25 @@ public class IndexModel : PageModel
     private readonly AppDbContext _db;
     public IndexModel(AppDbContext db) => _db = db;
 
-    public List<Studio> Studios { get; set; } = new();
+    public IList<Studio> Studios { get; set; } = new List<Studio>();
 
-    public async Task OnGetAsync()
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+    public int TotalPages { get; set; }
+
+    public async Task OnGetAsync(int pageNumber = 1)
     {
-        Studios = await _db.Studios
-            .OrderBy(s => s.Name)
+        PageNumber = pageNumber < 1 ? 1 : pageNumber;
+
+        var query = _db.Studios
+            .OrderBy(s => s.Name);
+
+        var totalCount = await query.CountAsync();
+        TotalPages = (int)Math.Ceiling(totalCount / (double)PageSize);
+
+        Studios = await query
+            .Skip((PageNumber - 1) * PageSize)
+            .Take(PageSize)
             .ToListAsync();
     }
 }

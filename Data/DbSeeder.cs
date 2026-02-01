@@ -8,36 +8,46 @@ public static class DbSeeder
 {
     public static async Task SeedAsync(AppDbContext db)
     {
-        // Αν έχει ήδη αρκετά games, μην ξανασπέρνεις
-        if (await db.Games.CountAsync() >= 20) return;
 
         // Genres
-        if (!await db.Genres.AnyAsync())
+        var genreNames = new[]
         {
-            db.Genres.AddRange(
-                new Genre { Name = "Action" },
-                new Genre { Name = "RPG" },
-                new Genre { Name = "Sports" },
-                new Genre { Name = "Adventure" },
-                new Genre { Name = "Strategy" },
-                new Genre { Name = "Racing" }
-            );
-            await db.SaveChangesAsync();
+            "Action", "RPG", "Sports", "Adventure", "Strategy",
+            "Racing", "Shooter", "Horror", "Simulation", "Indie"
+        };
+
+        foreach (var name in genreNames)
+        {
+            if (!await db.Genres.AnyAsync(g => g.Name == name))
+            {
+                db.Genres.Add(new Genre { Name = name });
+            }
         }
+        await db.SaveChangesAsync();
 
         // Studios
-        if (!await db.Studios.AnyAsync())
+        var studioNames = new[]
         {
-            db.Studios.AddRange(
-                new Studio { Name = "CD Projekt" },
-                new Studio { Name = "Naughty Dog" },
-                new Studio { Name = "EA Sports" },
-                new Studio { Name = "Ubisoft" },
-                new Studio { Name = "Rockstar Games" },
-                new Studio { Name = "FromSoftware" }
-            );
-            await db.SaveChangesAsync();
+            "Naughty Dog",
+            "CD Projekt",
+            "EA Sports",
+            "Ubisoft",
+            "Rockstar Games",
+            "FromSoftware",
+            "Santa Monica Studio",
+            "Insomniac Games",
+            "Guerrilla Games",
+            "Bethesda"
+        };
+
+        foreach (var name in studioNames)
+        {
+            if (!await db.Studios.AnyAsync(s => s.Name == name))
+            {
+                db.Studios.Add(new Studio { Name = name });
+            }
         }
+        await db.SaveChangesAsync();
 
         var genres = await db.Genres.ToListAsync();
         var studios = await db.Studios.ToListAsync();

@@ -2,6 +2,7 @@
 @model VideoGameApp.Pages.Studios.IndexModel
 
 <h1 class="display-6 mb-3">Studios</h1>
+
 @if (TempData["Error"] is string err)
 {
     <div class="alert alert-danger">@err</div>
@@ -10,6 +11,7 @@
 {
     <div class="alert alert-success">@ok</div>
 }
+
 @if (User.IsInRole("Admin"))
 {
     <p>
@@ -22,7 +24,6 @@
     <tr>
         <th>Name</th>
         <th>Country</th>
-        
     </tr>
     </thead>
     <tbody>
