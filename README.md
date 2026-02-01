@@ -1,53 +1,61 @@
-# 🎮 VideoGameApp
+# 🎮 VideoGameApp  
+**Final Project – Coding Factory 8**
 
-Final project for **Coding Factory 8**.  
-This application is a **Video Game Management System** built with ASP.NET Core Razor Pages, Entity Framework Core, and SQLite.
+A **Video Game Management & E-Shop System** built with **ASP.NET Core Razor Pages**, **Entity Framework Core**, and **SQLite**.
 
-It implements full **CRUD functionality**, **Authentication / Authorization**, **Role-based access control**, and basic business rules.
+The application demonstrates a complete web application workflow, including **CRUD operations**, **Authentication & Authorization**, **role-based access control**, **shopping cart**, **orders**, **pagination**, and **database seeding**.
 
 ---
 
 ## 🧱 Technologies
-- ASP.NET Core (.NET 8)
-- Razor Pages (Server-Side Rendering)
-- Entity Framework Core
-- SQLite
-- ASP.NET Core Identity
-- Bootstrap 5
+- **ASP.NET Core (.NET 8)**
+- **Razor Pages** (Server-Side Rendering)
+- **Entity Framework Core**
+- **SQLite**
+- **ASP.NET Core Identity**
+- **Bootstrap 5**
 
 ---
 
 ## 📐 Architecture
-The application follows a layered architecture:
+The application follows a **layered architecture**:
 
-- **Domain Models** (Game, Genre, Studio)
-- **Data Access Layer** (EF Core / DbContext)
-- **Infrastructure / Services**
-- **Presentation Layer** (Razor Pages)
+- **Domain Models**  
+  (Game, Genre, Studio, Order, OrderItem)
+- **Data Access Layer**  
+  (Entity Framework Core / DbContext)
+- **Infrastructure & Services**
+- **Presentation Layer**  
+  (Razor Pages)
 
-The database is created using a **Model-First approach** via EF Core migrations.
+The database is created using a **Model-First approach** through **EF Core Migrations**.
 
 ---
 
 ## 📊 Domain Model
-The application manages:
+
+### Entities
 - **Games**
 - **Genres**
 - **Studios**
+- **Orders**
+- **Order Items**
 
-### Relationships:
-- Each Game belongs to **one Genre**
-- Each Game belongs to **one Studio**
+### Relationships
+- Each **Game** belongs to **one Genre**
+- Each **Game** belongs to **one Studio**
+- Each **Order** belongs to **one User**
+- Each **Order** contains **multiple Games**
 
-### Business Rules:
-- A Genre or Studio cannot be deleted if it is used by any Game
-- Appropriate validation messages are displayed in the UI
+### Business Rules
+- A **Genre** or **Studio** cannot be deleted if it is used by any Game
+- Proper validation messages are displayed in the UI
+- Prices and totals are calculated automatically (Cart & Orders)
 
 ---
 
 ## 🔐 Authentication & Authorization
-
-The application uses **ASP.NET Core Identity** for authentication and role-based authorization.
+The application uses **ASP.NET Core Identity**.
 
 ### Authentication
 Supported features:
@@ -56,43 +64,89 @@ Supported features:
 - Cookie-based authentication
 - Secure password hashing (ASP.NET Core Identity)
 
-Identity UI endpoints:
+Identity endpoints:
 - `/Identity/Account/Register`
 - `/Identity/Account/Login`
 - `/Identity/Account/Logout`
 
-Navigation links (Login / Register / Logout) are displayed dynamically in the navbar based on the user’s authentication state.
+Navigation links (**Login / Register / Logout / Username**) are rendered dynamically based on authentication state.
 
 ---
 
-### Authorization (Roles)
+### 👥 Authorization (Roles)
+Two roles are defined:
 
-The application defines two roles:
-- `Admin`
-- `User`
+- **Admin**
+- **User**
 
 #### Default Admin User
-At application startup, a default admin user is automatically seeded:
+At startup, a default admin account is seeded automatically:
+
 - **Email:** `admin@admin.com`
 - **Password:** `Admin123!`
-- **Role:** `Admin`
+- **Role:** Admin
 
----
-
-### Role-based Access Control
+#### Role-Based Access Control
 
 | Action | User | Admin |
-|------|------|-------|
+|------|------|------|
 | View lists & details | ✅ | ✅ |
 | Create entities | ❌ | ✅ |
 | Edit entities | ❌ | ✅ |
 | Delete entities | ❌ | ✅ |
+| Add to cart / Place orders | ✅ | ✅ |
 
-Access control is enforced:
-- **Backend:** `[Authorize(Roles = "Admin")]` on Create/Edit/Delete Razor Pages
-- **Frontend:** Create/Edit/Delete buttons are hidden for non-admin users
+Security enforcement:
+- **Backend:** `[Authorize(Roles = "Admin")]` on Create/Edit/Delete pages
+- **Frontend:** Admin buttons hidden from non-admin users
+- Unauthorized access redirects to **Access Denied**
 
-Even if a non-authorized user attempts to access protected URLs directly, they are redirected to **Access Denied**.
+---
+
+## 🛒 Shopping Cart & Orders
+
+### Shopping Cart
+- Add games to cart
+- Increase / decrease quantity
+- Automatic total calculation
+- Cart indicator in the navigation bar
+
+### Checkout & Orders
+- Checkout page with order summary
+- Order creation
+- Order history per user
+- Detailed order view
+
+---
+
+## 📄 Pagination
+Pagination is implemented for:
+- **Games**
+- **Genres**
+- **Studios**
+
+This ensures:
+- Better performance
+- Clean UI with large datasets
+- Realistic application behavior
+
+---
+
+## 🌱 Database Seeding
+The database is **automatically seeded at application startup**.
+
+Seeded data:
+- **10 Genres**
+- **10 Studios** (with Country information)
+- **20+ Games**
+- **Default Admin User & Roles**
+
+Seeding is **idempotent**:
+- No duplicate data
+- Safe to run multiple times
+- Missing fields are backfilled automatically
+
+This allows the project to be cloned and run immediately without manual configuration.
 
 ---
 
@@ -100,25 +154,23 @@ Even if a non-authorized user attempts to access protected URLs directly, they a
 The application uses **SQLite** (single-file database).
 
 Database file:
-- `videogameapp.db`
-
-The database includes:
-- Domain tables (Games, Genres, Studios)
+Includes:
+- Domain tables (Games, Genres, Studios, Orders)
 - Identity tables:
-  - `AspNetUsers`
-  - `AspNetRoles`
-  - `AspNetUserRoles`
-  - `AspNetUserClaims`
+  - AspNetUsers
+  - AspNetRoles
+  - AspNetUserRoles
+  - AspNetUserClaims
   - and others
 
-EF Core migrations are applied automatically at startup.
+EF Core migrations are applied automatically.
 
 ---
 
 ## ▶️ Build & Run
 
 ### Prerequisites
-- .NET SDK 8.0+
+- **.NET SDK 8.0+**
 
 ### Run the application
 ```bash
