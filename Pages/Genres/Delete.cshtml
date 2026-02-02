@@ -1,22 +1,47 @@
 @page "{id:int}"
 @model VideoGameApp.Pages.Genres.DeleteModel
 
-<h1 class="display-6 mb-3 text-danger">Delete Genre</h1>
-
-<p>Are you sure you want to delete this genre?</p>
-@if (Model.IsInUse)
-{
-    <div class="alert alert-warning mt-3">
-        Δεν μπορεί να διαγραφεί αυτό το Genre γιατί χρησιμοποιείται από υπάρχοντα Games.
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+    <div>
+        <h1 class="display-6 mb-0 text-danger">Delete Genre</h1>
+        <div class="text-muted small">This action cannot be undone.</div>
     </div>
-}
-<dl class="row">
-    <dt class="col-sm-3">Name</dt>
-    <dd class="col-sm-9">@Model.Genre.Name</dd>
-</dl>
 
-<form method="post">
-    <input type="hidden" asp-for="Genre.Id" />
-    <button class="btn btn-danger" type="submit" @(Model.IsInUse ? "disabled" : "")>Yes, delete</button>
-    <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
-</form>
+    <a class="btn btn-outline-secondary" asp-page="./Index">
+        <i class="bi bi-arrow-left me-2"></i>Back
+    </a>
+</div>
+
+<div class="card shadow-soft border-danger">
+    <div class="card-body">
+        <div class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <div>
+                Are you sure you want to permanently delete this genre?
+            </div>
+        </div>
+
+        @if (Model.IsInUse)
+        {
+            <div class="alert alert-warning d-flex align-items-center gap-2 mb-4" role="alert">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    This genre cannot be deleted because it is used by existing games.
+                </div>
+            </div>
+        }
+
+        <dl class="row mb-4">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9 fw-semibold">@Model.Genre.Name</dd>
+        </dl>
+
+        <form method="post" class="d-flex gap-2">
+            <input type="hidden" asp-for="Genre.Id" />
+            <button class="btn btn-danger" type="submit" @(Model.IsInUse ? "disabled" : "")>
+                <i class="bi bi-trash3 me-2"></i>Yes, delete
+            </button>
+            <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+        </form>
+    </div>
+</div>

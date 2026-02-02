@@ -1,23 +1,38 @@
 @page "{id:int}"
 @model VideoGameApp.Pages.Genres.EditModel
 
-<h1 class="display-6 mb-3">Edit Genre</h1>
-
-<form method="post" class="row g-3">
-    <input type="hidden" asp-for="Genre.Id" />
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="col-md-6">
-        <label asp-for="Genre.Name" class="form-label"></label>
-        <input asp-for="Genre.Name" class="form-control" />
-        <span asp-validation-for="Genre.Name" class="text-danger"></span>
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+    <div>
+        <h1 class="display-6 mb-0">Edit Genre</h1>
+        <div class="text-muted small">Update genre information.</div>
     </div>
 
-    <div class="col-12">
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+    <a class="btn btn-outline-secondary" asp-page="./Index">
+        <i class="bi bi-arrow-left me-2"></i>Back
+    </a>
+</div>
+
+<div class="card shadow-soft">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <input type="hidden" asp-for="Genre.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-md-6">
+                <label asp-for="Genre.Name" class="form-label"></label>
+                <input asp-for="Genre.Name" class="form-control" />
+                <span asp-validation-for="Genre.Name" class="text-danger"></span>
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-3">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-check-lg me-2"></i>Save changes
+                </button>
+                <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

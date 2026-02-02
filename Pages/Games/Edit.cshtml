@@ -1,47 +1,76 @@
 @page "{id:int}"
 @model VideoGameApp.Pages.Games.EditModel
 
-<h1 class="display-6 mb-3">Edit Game</h1>
-
-<form method="post" class="row g-3">
-    <input type="hidden" asp-for="Game.Id" />
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="col-md-6">
-        <label asp-for="Game.Title" class="form-label"></label>
-        <input asp-for="Game.Title" class="form-control" />
-        <span asp-validation-for="Game.Title" class="text-danger"></span>
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+    <div>
+        <h1 class="display-6 mb-0">Edit Game</h1>
+        <div class="text-muted small">Update game information.</div>
     </div>
 
-    <div class="col-md-3">
-        <label asp-for="Game.Price" class="form-label"></label>
-        <input asp-for="Game.Price" class="form-control" />
-        <span asp-validation-for="Game.Price" class="text-danger"></span>
-    </div>
+    <a class="btn btn-outline-secondary" asp-page="Index">
+        <i class="bi bi-arrow-left me-2"></i>Back
+    </a>
+</div>
 
-    <div class="col-md-3">
-        <label asp-for="Game.ReleaseDate" class="form-label"></label>
-        <input asp-for="Game.ReleaseDate" class="form-control" type="date" />
-        <span asp-validation-for="Game.ReleaseDate" class="text-danger"></span>
-    </div>
+<div class="card shadow-soft">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <input type="hidden" asp-for="Game.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="col-md-6">
-        <label asp-for="Game.GenreId" class="form-label">Genre</label>
-        <select asp-for="Game.GenreId" class="form-select" asp-items="Model.GenreOptions"></select>
-        <span asp-validation-for="Game.GenreId" class="text-danger"></span>
-    </div>
+            <div class="col-md-6">
+                <label asp-for="Game.Title" class="form-label"></label>
+                <input asp-for="Game.Title" class="form-control" />
+                <span asp-validation-for="Game.Title" class="text-danger"></span>
+            </div>
 
-    <div class="col-md-6">
-        <label asp-for="Game.StudioId" class="form-label">Studio</label>
-        <select asp-for="Game.StudioId" class="form-select" asp-items="Model.StudioOptions"></select>
-        <span asp-validation-for="Game.StudioId" class="text-danger"></span>
-    </div>
+            <div class="col-md-3">
+                <label asp-for="Game.Price" class="form-label"></label>
+                <input asp-for="Game.Price" class="form-control" />
+                <span asp-validation-for="Game.Price" class="text-danger"></span>
+            </div>
 
-    <div class="col-12">
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-outline-secondary" asp-page="Index">Back</a>
+            <div class="col-md-3">
+                <label asp-for="Game.ReleaseDate" class="form-label"></label>
+                <input asp-for="Game.ReleaseDate" class="form-control" type="date" />
+                <span asp-validation-for="Game.ReleaseDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label asp-for="Game.GenreId" class="form-label mb-0">Genre</label>
+                    <a class="btn btn-sm btn-outline-primary"
+                       asp-page="/Genres/Create"
+                       asp-route-returnUrl="@Url.Page("/Games/Edit", new { id = Model.Game.Id })">
+                        <i class="bi bi-plus-lg me-1"></i>Add Genre
+                    </a>
+                </div>
+                <select asp-for="Game.GenreId" class="form-select" asp-items="Model.GenreOptions"></select>
+                <span asp-validation-for="Game.GenreId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label asp-for="Game.StudioId" class="form-label mb-0">Studio</label>
+                    <a class="btn btn-sm btn-outline-primary"
+                       asp-page="/Studios/Create"
+                       asp-route-returnUrl="@Url.Page("/Games/Edit", new { id = Model.Game.Id })">
+                        <i class="bi bi-plus-lg me-1"></i>Add Studio
+                    </a>
+                </div>
+                <select asp-for="Game.StudioId" class="form-select" asp-items="Model.StudioOptions"></select>
+                <span asp-validation-for="Game.StudioId" class="text-danger"></span>
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-3">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-check-lg me-2"></i>Save changes
+                </button>
+                <a class="btn btn-outline-secondary" asp-page="Index">Cancel</a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

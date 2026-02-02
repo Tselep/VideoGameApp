@@ -1,6 +1,15 @@
 @page "{id:int}"
 @model VideoGameApp.Pages.Games.DeleteModel
 
+@if (Model.Game is null)
+{
+    <div class="alert alert-danger">Game not found.</div>
+    <a class="btn btn-outline-secondary" asp-page="Index">
+        <i class="bi bi-arrow-left me-2"></i>Back
+    </a>
+    return;
+}
+
 <h1 class="display-6 mb-3 text-danger">Delete Game</h1>
 
 <p>Are you sure you want to delete this game?</p>
