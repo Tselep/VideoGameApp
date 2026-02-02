@@ -6,12 +6,33 @@
         <div class="text-muted small">Browse the catalog and add games to your cart.</div>
     </div>
 
-    @if (User.IsInRole("Admin"))
-    {
-        <a class="btn btn-primary" asp-page="Create">
-            <i class="bi bi-plus-lg me-2"></i>Create New Game
-        </a>
-    }
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+        <form method="get" class="d-flex gap-2" role="search">
+            <input name="q"
+                   value="@Request.Query["q"]"
+                   class="form-control"
+                   style="max-width: 320px;"
+                   placeholder="Search games"
+                   aria-label="Search games" />
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="bi bi-search me-1"></i>Search
+            </button>
+
+            @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
+            {
+                <a class="btn btn-outline-secondary" asp-page="./Index">
+                    <i class="bi bi-x-lg me-1"></i>Clear
+                </a>
+            }
+        </form>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-page="Create">
+                <i class="bi bi-plus-lg me-2"></i>Create New Game
+            </a>
+        }
+    </div>
 </div>
 
 <div class="card shadow-soft">
@@ -101,7 +122,8 @@
             <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
                 <a class="page-link"
                    asp-page="./Index"
-                   asp-route-pageNumber="@(Model.PageNumber - 1)">
+                   asp-route-pageNumber="@(Model.PageNumber - 1)"
+                   asp-route-q="@Request.Query["q"]">
                     Previous
                 </a>
             </li>
@@ -111,7 +133,8 @@
                 <li class="page-item @(i == Model.PageNumber ? "active" : "")">
                     <a class="page-link"
                        asp-page="./Index"
-                       asp-route-pageNumber="@i">
+                       asp-route-pageNumber="@i"
+                       asp-route-q="@Request.Query["q"]">
                         @i
                     </a>
                 </li>
@@ -120,7 +143,8 @@
             <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
                 <a class="page-link"
                    asp-page="./Index"
-                   asp-route-pageNumber="@(Model.PageNumber + 1)">
+                   asp-route-pageNumber="@(Model.PageNumber + 1)"
+                   asp-route-q="@Request.Query["q"]">
                     Next
                 </a>
             </li>
