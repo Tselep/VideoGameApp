@@ -1,199 +1,129 @@
-# 🎮 VideoGameApp  
-Final Project – Coding Factory 8
+🎮 TseleStation Store
 
-A Video Game Management & E-Shop System built with ASP.NET Core Razor Pages, Entity Framework Core, and SQLite.
+A Video Game Store & Management System built as a final project for Coding Factory 8.
 
-The application demonstrates a complete web application workflow, including CRUD operations, Authentication & Authorization, role-based access control, shopping cart, orders, pagination, and database seeding.
+The application allows users to browse video games, manage genres and studios, add items to a cart, and place orders, while administrators can fully manage the catalog.
 
----
+⸻
 
-## 🧱 Technologies
-- ASP.NET Core (.NET 8)
-- Razor Pages (Server-Side Rendering)
-- Entity Framework Core
-- SQLite
-- ASP.NET Core Identity
-- Bootstrap 5
+🚀 Features
 
----
+👤 Users
+	•	Browse video games with search & pagination
+	•	View game details
+	•	Add games to cart
+	•	Update cart quantities / remove items
+	•	Checkout and place orders
+	•	View order history and order details
 
-## 📐 Architecture
+🔐 Authentication & Authorization
+	•	ASP.NET Core Identity
+	•	Register / Login / Logout
+	•	Role-based access:
+	•	Admin: Full CRUD access
+	•	User: Read-only catalog + orders
+
+🛠 Admin Features
+	•	Create / Edit / Delete Games
+	•	Create / Edit / Delete Genres
+	•	Create / Edit / Delete Studios
+	•	Protected admin-only actions
+
+🔍 Search
+	•	Search implemented on:
+	•	Games (by Title / Genre / Studio)
+	•	Genres (by Name)
+	•	Studios (by Name / Country)
+	•	Search is preserved during pagination
+
+🛒 Cart & Orders
+	•	Session-based cart
+	•	Order creation with line items
+	•	Order totals calculation
+	•	Order details view
+
+⸻
+
+🎨 UI / UX
+	•	Built with Bootstrap 5
+	•	Responsive layout
+	•	Modern Hero section on Home page
+	•	Animated stat cards & hover effects
+	•	Consistent navbar & layout across pages
+
+⸻
+
+🧱 Architecture
+
 The application follows a layered architecture:
+	•	Presentation Layer: Razor Pages
+	•	Infrastructure Layer: Services & Repositories
+	•	Data Access Layer: Entity Framework Core
+	•	Domain Models: Game, Genre, Studio, Order, OrderItem
 
-- Domain Models (Game, Genre, Studio, Order, OrderItem)
-- Data Access Layer (Entity Framework Core / DbContext)
-- Infrastructure & Services
-- Presentation Layer (Razor Pages)
+⸻
 
-The database is created using a Model-First approach through EF Core Migrations.
+🧪 Technologies
+	•	ASP.NET Core (.NET 8)
+	•	Razor Pages
+	•	Entity Framework Core
+	•	SQLite
+	•	ASP.NET Core Identity
+	•	Bootstrap 5
+	•	Bootstrap Icons
 
----
+⸻
 
-## 📊 Domain Model
+🗄 Database
+	•	SQLite database
+	•	Code-First approach using EF Core Migrations
+	•	Relationships:
+	•	Game → Genre (Many-to-One)
+	•	Game → Studio (Many-to-One)
+	•	Order → OrderItems (One-to-Many)
 
-### Entities
-- Games
-- Genres
-- Studios
-- Orders
-- Order Items
+⸻
 
-### Relationships
-- Each Game belongs to one Genre
-- Each Game belongs to one Studio
-- Each Order belongs to one User
-- Each Order contains multiple Games
+▶️ How to Run the Project
+	1.	Clone the repository:
 
-### Business Rules
-- A Genre or Studio cannot be deleted if it is used by any Game
-- Proper validation messages are displayed in the UI
-- Prices and totals are calculated automatically (Cart & Orders)
+git clone https://github.com/USERNAME/TseleStationStore.git
 
----
+	2.	Navigate to the project folder:
 
-## 🔐 Authentication & Authorization
-The application uses ASP.NET Core Identity.
+cd VideoGameApp
 
-### Authentication
-Supported features:
-- User Registration
-- User Login / Logout
-- Cookie-based authentication
-- Secure password hashing (ASP.NET Core Identity)
+	3.	Apply migrations & run:
 
-Identity endpoints:
-- /Identity/Account/Register
-- /Identity/Account/Login
-- /Identity/Account/Logout
+dotnet ef database update
+dotnet run
 
-Navigation links (Login / Register / Logout / Username) are rendered dynamically based on authentication state.
+	4.	Open browser:
 
----
+https://localhost:5001
 
-## 👥 Authorization (Roles)
-The application defines two roles:
 
-- Admin
-- User
+⸻
 
-### Default Admin User
-At application startup, a default admin account is seeded automatically:
+🔑 Admin Account (for testing)
 
-- Email: admin@admin.com
-- Password: Admin123!
-- Role: Admin
+Email: admin@admin.com
+Password: Admin123!
 
-### Role-Based Access Control
+Credentials are seeded on first run (if enabled in the project).
 
-Action | User | Admin
------- | ---- | -----
-View lists & details | ✅ | ✅
-Create entities | ❌ | ✅
-Edit entities | ❌ | ✅
-Delete entities | ❌ | ✅
-Add to cart / Place orders | ✅ | ✅
+⸻
 
-Access control is enforced:
-- Backend: [Authorize(Roles = "Admin")] on Create/Edit/Delete pages
-- Frontend: Admin buttons are hidden for non-admin users
-- Unauthorized access redirects to Access Denied
+📌 Notes
+	•	The project was developed as part of Coding Factory 8 final assignment.
+	•	Focus was given to clean architecture, readable code, and user experience.
 
----
+⸻
 
-## 🛒 Shopping Cart & Orders
+👨‍💻 Author
 
-### Shopping Cart
-- Add games to cart
-- Increase / decrease quantity
-- Automatic total calculation
-- Cart indicator in the navigation bar
+Tselepis Spiros
 
-### Checkout & Orders
-- Checkout page with order summary
-- Order creation
-- Order history per user
-- Order details page
+⸻
 
----
-
-## 📄 Pagination
-Pagination is implemented for:
-- Games
-- Genres
-- Studios
-
-This ensures better performance, clean UI, and realistic application behavior with large datasets.
-
----
-
-## 🌱 Database Seeding
-The database is automatically seeded at application startup.
-
-Seeded data includes:
-- 10 Genres
-- 10 Studios (with Country information)
-- 20+ Games
-- Default Admin User & Roles
-
-Seeding logic is idempotent:
-- No duplicate data is created
-- Safe to run multiple times
-- Missing fields are backfilled automatically
-
-This allows the project to be cloned and run immediately without manual configuration.
-
----
-
-## 🗄️ Database
-The application uses SQLite (single-file database).
-
-Database file:
-videogameapp.db
-
-The database includes:
-- Domain tables (Games, Genres, Studios, Orders)
-- Identity tables:
-  - AspNetUsers
-  - AspNetRoles
-  - AspNetUserRoles
-  - AspNetUserClaims
-  - and others
-
-EF Core migrations are applied automatically.
-
----
-
-## ▶️ Build & Run
-
-### Prerequisites
-- .NET SDK 8.0+
-
-### Run the application
-dotnet restore  
-dotnet run  
-
-On startup, the application will:
-- Create the database
-- Apply migrations
-- Seed initial data automatically
-
----
-
-## ✅ Final Delivery Checklist
-- [x] ASP.NET Core Razor Pages
-- [x] Entity Framework Core with SQLite
-- [x] Full CRUD functionality
-- [x] Authentication & Authorization
-- [x] Role-based access control
-- [x] Shopping cart & orders
-- [x] Pagination
-- [x] Database seeding
-- [x] Clean Bootstrap UI
-- [x] Ready-to-run project
-
----
-
-## 🏁 Conclusion
-This project demonstrates a complete and realistic ASP.NET Core web application, combining administrative management with an e-commerce workflow.
-
-It is designed to be easy to run, easy to review, and easy to extend.
+✅ Project is complete and ready for evaluation.
