@@ -1,53 +1,127 @@
 ﻿@page
 @model VideoGameApp.Pages.IndexModel
-@{ ViewData["Title"] = "Home"; }
 
-<div class="text-center mb-4">
-    <h1 class="display-4">TseleStation</h1>
-</div>
+@{
+    ViewData["Title"] = "Home";
+}
 
+<!-- Hero -->
+<section class="hero-surface rounded-4 p-4 p-md-5 mb-4 overflow-hidden position-relative">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <div class="badge text-bg-light border mb-3">🎮 Video Game e-Store</div>
+            <h1 class="display-4 fw-semibold mb-2">TseleStation</h1>
+            <p class="lead text-white-75 mb-3">
+                Browse Games · Genres · Studios, and place orders.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-light btn-lg" asp-page="/Games/Index">
+                    <i class="bi bi-joystick me-2"></i>Browse Games
+                </a>
+                <a class="btn btn-outline-light btn-lg" asp-page="/Cart/Index">
+                    <i class="bi bi-cart3 me-2"></i>View Cart
+                </a>
+            </div>
+            
+        </div>
+
+        <div class="col-lg-5">
+            <div class="glass-panel p-3 p-md-4 rounded-4">
+                <div class="d-flex align-items-center gap-2 mb-3 text-white">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <strong>Quick access</strong>
+                </div>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-outline-light" asp-page="/Genres/Index">
+                        <i class="bi bi-tags me-2"></i>Genres
+                    </a>
+                    <a class="btn btn-outline-light" asp-page="/Studios/Index">
+                        <i class="bi bi-building me-2"></i>Studios
+                    </a>
+                    <a class="btn btn-outline-light" asp-page="/Orders/Index">
+                        <i class="bi bi-receipt me-2"></i>My Orders
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- decorative blobs -->
+    <span class="hero-blob hero-blob-1"></span>
+    <span class="hero-blob hero-blob-2"></span>
+</section>
+
+<!-- Stats -->
 <div class="row g-3 mb-4">
     <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Games</h5>
-                <p class="display-6 mb-0">@Model.GamesCount</p>
-                <p class="text-muted mb-0">total records</p>
+        <a class="text-decoration-none" asp-page="/Games/Index">
+            <div class="card stat-card shadow-soft h-100 reveal">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="text-muted small">Games</div>
+                            <div class="display-6 fw-semibold mb-0">@Model.GamesCount</div>
+                            <div class="text-muted">total records</div>
+                        </div>
+                        <div class="stat-icon"><i class="bi bi-joystick"></i></div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Genres</h5>
-                <p class="display-6 mb-0">@Model.GenresCount</p>
-                <p class="text-muted mb-0">total records</p>
+        <a class="text-decoration-none" asp-page="/Genres/Index">
+            <div class="card stat-card shadow-soft h-100 reveal" style="animation-delay: 80ms;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="text-muted small">Genres</div>
+                            <div class="display-6 fw-semibold mb-0">@Model.GenresCount</div>
+                            <div class="text-muted">total records</div>
+                        </div>
+                        <div class="stat-icon"><i class="bi bi-tags"></i></div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Studios</h5>
-                <p class="display-6 mb-0">@Model.StudiosCount</p>
-                <p class="text-muted mb-0">total records</p>
+        <a class="text-decoration-none" asp-page="/Studios/Index">
+            <div class="card stat-card shadow-soft h-100 reveal" style="animation-delay: 160ms;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="text-muted small">Studios</div>
+                            <div class="display-6 fw-semibold mb-0">@Model.StudiosCount</div>
+                            <div class="text-muted">total records</div>
+                        </div>
+                        <div class="stat-icon"><i class="bi bi-building"></i></div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 
-@if (Model.RecentGames.Count == 0)
-{
-    <div class="alert alert-warning">
-        No games found yet.
+<!-- Recently added -->
+<div class="card shadow-soft reveal">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-0">Recently added games</h5>
+            <div class="text-muted small">Latest titles in your catalog</div>
+        </div>
+        <a class="btn btn-sm btn-outline-secondary" asp-page="/Games/Index">
+            View all <i class="bi bi-arrow-right ms-1"></i>
+        </a>
     </div>
-}
-else
-{
-    <h2 class="h5 mb-2">Recently added games</h2>
-    <div class="table-responsive">
-        <table class="table table-striped align-middle">
-            <thead>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
                 <tr>
                     <th>Title</th>
                     <th>Genre</th>
@@ -55,21 +129,20 @@ else
                     <th class="text-end">Price</th>
                     <th>Release Date</th>
                 </tr>
-            </thead>
-            <tbody>
-            @foreach (var g in Model.RecentGames)
-            {
-                <tr>
-                    <td>@g.Title</td>
-                    <td>@(g.Genre?.Name ?? "-")</td>
-                    <td>@(g.Studio?.Name ?? "-")</td>
-                    <td class="text-end">
-                        @($"{g.Price:0.00} €")
-                    </td>
-                    <td>@(g.ReleaseDate?.ToString("yyyy-MM-dd") ?? "-")</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var g in Model.RecentGames)
+                {
+                    <tr>
+                        <td class="fw-semibold">@g.Title</td>
+                        <td><span class="badge rounded-pill text-bg-light border">@g.Genre?.Name</span></td>
+                        <td><span class="badge rounded-pill text-bg-light border">@g.Studio?.Name</span></td>
+                        <td class="text-end">@g.Price.ToString("0.00") €</td>
+                        <td>@g.ReleaseDate?.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
-}
+</div>
