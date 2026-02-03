@@ -16,6 +16,51 @@
     </a>
 </div>
 
+<form method="get" class="card shadow-soft mb-3">
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Order ID</label>
+                <input name="orderId"
+                       value="@Request.Query["orderId"]"
+                       class="form-control"
+                       placeholder="#123" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">From</label>
+                <input type="date"
+                       name="from"
+                       value="@Request.Query["from"]"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">To</label>
+                <input type="date"
+                       name="to"
+                       value="@Request.Query["to"]"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-3 d-flex gap-2">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-search me-1"></i>Search
+                </button>
+
+                @if (!string.IsNullOrWhiteSpace(Request.Query["orderId"]) ||
+                     !string.IsNullOrWhiteSpace(Request.Query["from"]) ||
+                     !string.IsNullOrWhiteSpace(Request.Query["to"]))
+                {
+                    <a class="btn btn-outline-secondary" asp-page="./Index">
+                        <i class="bi bi-x-lg me-1"></i>Clear
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
 @if (Model.Orders.Count == 0)
 {
     <div class="alert alert-info d-flex align-items-center gap-2">

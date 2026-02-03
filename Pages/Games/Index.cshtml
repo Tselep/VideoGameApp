@@ -6,14 +6,15 @@
         <div class="text-muted small">Browse the catalog and add games to your cart.</div>
     </div>
 
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-        <form method="get" class="d-flex gap-2" role="search">
+    <div class="d-flex align-items-center">
+        <form method="get" class="input-group" role="search" style="width: 600px;">
             <input name="q"
                    value="@Request.Query["q"]"
                    class="form-control"
-                   style="max-width: 320px;"
-                   placeholder="Search games"
-                   aria-label="Search games" />
+                   placeholder="Search Games · Genres · Studios · Orders"
+                   title="Search Games, Genres, Studios, Orders"
+                   aria-label="Search" />
+
             <button class="btn btn-outline-secondary" type="submit">
                 <i class="bi bi-search me-1"></i>Search
             </button>
