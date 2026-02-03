@@ -127,13 +127,16 @@ Search is preserved during pagination.
 
 ▶️ How to Run
 
-# Clone repository
+Clone repository
+⸻⸻⸻⸻⸻⸻
 git clone https://github.com/Tselep/VideoGameApp.git
 
-# Navigate to project
+Navigate to project
+⸻⸻⸻⸻⸻⸻
 cd VideoGameApp
 
-# Apply migrations and run
+Apply migrations and run
+⸻⸻⸻⸻⸻⸻
 dotnet ef database update
 dotnet run
 
