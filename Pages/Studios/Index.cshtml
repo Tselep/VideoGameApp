@@ -7,12 +7,31 @@
         <div class="text-muted small">Manage the available game studios.</div>
     </div>
 
-    @if (User.IsInRole("Admin"))
-    {
-        <a class="btn btn-primary" asp-page="./Create">
-            <i class="bi bi-plus-lg me-2"></i>Create New Studio
-        </a>
-    }
+    <div class="d-flex align-items-center gap-2">
+        <form method="get" class="input-group" role="search" style="width: 520px;">
+            <input name="q"
+                   value="@Request.Query["q"]"
+                   class="form-control"
+                   placeholder="Search Studios"
+                   aria-label="Search Studios" />
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="bi bi-search me-1"></i>Search
+            </button>
+            @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
+            {
+                <a class="btn btn-outline-secondary" asp-page="./Index">
+                    <i class="bi bi-x-lg me-1"></i>Clear
+                </a>
+            }
+        </form>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-page="./Create">
+                <i class="bi bi-plus-lg me-2"></i>Create New Studio
+            </a>
+        }
+    </div>
 </div>
 
 @if (TempData["Error"] is string err)
