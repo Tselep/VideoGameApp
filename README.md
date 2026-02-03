@@ -1,71 +1,27 @@
-🎮 TseleStation Store
+🎮  TseleStation Store
 
-A Video Game Store & Management System built as a final project for Coding Factory 8.
+Final project for Coding Factory 8.
 
-The application allows users to browse video games, manage genres and studios, add items to a cart, and place orders, while administrators can fully manage the catalog.
-
-⸻
-
-🚀 Features
-
-👤 Users
-	•	Browse video games with search & pagination
-	•	View game details
-	•	Add games to cart
-	•	Update cart quantities / remove items
-	•	Checkout and place orders
-	•	View order history and order details
-
-🔐 Authentication & Authorization
-	•	ASP.NET Core Identity
-	•	Register / Login / Logout
-	•	Role-based access:
-	•	Admin: Full CRUD access
-	•	User: Read-only catalog + orders
-
-🛠 Admin Features
-	•	Create / Edit / Delete Games
-	•	Create / Edit / Delete Genres
-	•	Create / Edit / Delete Studios
-	•	Protected admin-only actions
-
-🔍 Search
-	•	Search implemented on:
-	•	Games (by Title / Genre / Studio)
-	•	Genres (by Name)
-	•	Studios (by Name / Country)
-	•	Search is preserved during pagination
-
-🛒 Cart & Orders
-	•	Session-based cart
-	•	Order creation with line items
-	•	Order totals calculation
-	•	Order details view
+A Video Game Store & Management System built with ASP.NET Core Razor Pages, featuring full CRUD operations, authentication/authorization, cart & orders, and a modern Bootstrap-based UI.
 
 ⸻
 
-🎨 UI / UX
-	•	Built with Bootstrap 5
-	•	Responsive layout
-	•	Modern Hero section on Home page
-	•	Animated stat cards & hover effects
-	•	Consistent navbar & layout across pages
+📌 Project Overview
+
+The application allows users to browse video games, search through the catalog, add items to a cart, and place orders.
+Administrators can manage the entire catalog (Games, Genres, Studios) through protected pages.
+
+The project focuses on:
+	•	Clean architecture
+	•	Proper use of ASP.NET Core Identity
+	•	Entity Framework Core with SQLite
+	•	Usable and consistent UI
 
 ⸻
 
-🧱 Architecture
-
-The application follows a layered architecture:
-	•	Presentation Layer: Razor Pages
-	•	Infrastructure Layer: Services & Repositories
-	•	Data Access Layer: Entity Framework Core
-	•	Domain Models: Game, Genre, Studio, Order, OrderItem
-
-⸻
-
-🧪 Technologies
+🧱 Technologies
 	•	ASP.NET Core (.NET 8)
-	•	Razor Pages
+	•	Razor Pages (SSR)
 	•	Entity Framework Core
 	•	SQLite
 	•	ASP.NET Core Identity
@@ -74,9 +30,94 @@ The application follows a layered architecture:
 
 ⸻
 
+📐 Architecture
+
+The application follows a layered architecture:
+	•	Domain Models
+	•	Game
+	•	Genre
+	•	Studio
+	•	Order
+	•	OrderItem
+	•	Data Access Layer
+	•	ApplicationDbContext (EF Core)
+	•	Migrations (Code First)
+	•	Infrastructure / Services
+	•	Cart handling
+	•	Order logic
+	•	Presentation Layer
+	•	Razor Pages
+	•	Shared Layout & Partial Views
+
+⸻
+
+🔐 Authentication & Authorization
+	•	ASP.NET Core Identity
+	•	User Registration / Login / Logout
+	•	Role-based access control:
+	•	Admin: Full CRUD access
+	•	User: Browse catalog, cart, orders
+
+Admin-only actions are protected at page level.
+
+⸻
+
+🎮 Functional Features
+
+Games
+	•	List with pagination
+	•	Search by Title / Genre / Studio
+	•	Details page
+	•	Admin CRUD operations
+
+Genres
+	•	List with pagination
+	•	Search by name
+	•	Admin CRUD operations
+
+Studios
+	•	List with pagination
+	•	Search by name or country
+	•	Admin CRUD operations
+
+Cart
+	•	Session-based cart
+	•	Add / Remove games
+	•	Update quantities
+
+Orders
+	•	Checkout process
+	•	Order creation with line items
+	•	Order history per user
+	•	Order details view
+
+⸻
+
+🔍 Search
+
+Search functionality is implemented consistently across:
+	•	Games
+	•	Genres
+	•	Studios
+
+Search is preserved during pagination.
+
+⸻
+
+🎨 UI / UX
+	•	Bootstrap 5 responsive layout
+	•	Consistent navbar and footer
+	•	Modern Home page with:
+	•	Hero section
+	•	Statistics cards
+	•	Recently added games
+	•	Hover effects and subtle animations
+
+⸻
+
 🗄 Database
 	•	SQLite database
-	•	Code-First approach using EF Core Migrations
+	•	EF Core Code-First approach
 	•	Relationships:
 	•	Game → Genre (Many-to-One)
 	•	Game → Studio (Many-to-One)
@@ -84,39 +125,36 @@ The application follows a layered architecture:
 
 ⸻
 
-▶️ How to Run the Project
-	1.	Clone the repository:
+▶️ How to Run
 
-git clone https://github.com/USERNAME/TseleStationStore.git
+# Clone repository
+git clone https://github.com/Tselep/VideoGameApp.git
 
-	2.	Navigate to the project folder:
-
+# Navigate to project
 cd VideoGameApp
 
-	3.	Apply migrations & run:
-
+# Apply migrations and run
 dotnet ef database update
 dotnet run
 
-	4.	Open browser:
+Open browser at:
 
 https://localhost:5001
 
 
 ⸻
 
-🔑 Admin Account (for testing)
+🔑 Admin Test Account
 
 Email: admin@admin.com
 Password: Admin123!
 
-Credentials are seeded on first run (if enabled in the project).
 
 ⸻
 
-📌 Notes
-	•	The project was developed as part of Coding Factory 8 final assignment.
-	•	Focus was given to clean architecture, readable code, and user experience.
+✅ Status
+
+The project is complete and ready for evaluation.
 
 ⸻
 
