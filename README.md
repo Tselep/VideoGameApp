@@ -141,7 +141,6 @@ Open browser at:
 
 https://localhost:5001
 
-
 ⸻
 
 🔑 Admin Test Account
@@ -149,13 +148,6 @@ https://localhost:5001
 Email: admin@admin.com
 
 Password: Admin123!
-
-
-⸻
-
-✅ Status
-
-The project is complete and ready for evaluation.
 
 ⸻
 
