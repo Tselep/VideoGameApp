@@ -1,36 +1,45 @@
 @page
 @model VideoGameApp.Pages.Genres.IndexModel
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
-    <div>
-        <h1 class="display-6 mb-0">Genres</h1>
-        <div class="text-muted small">Manage the available genres for your game catalog.</div>
-    </div>
+@{
+    ViewData["Title"] = "Genres";
+}
 
-    <div class="d-flex align-items-center gap-2">
-        <form method="get" class="input-group" role="search" style="width: 520px;">
-            <input name="q"
-                   value="@Request.Query["q"]"
-                   class="form-control"
-                   placeholder="Search Genres"
-                   aria-label="Search Genres" />
-            <button class="btn btn-outline-secondary" type="submit">
-                <i class="bi bi-search me-1"></i>Search
-            </button>
-            @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
-            {
-                <a class="btn btn-outline-secondary" asp-page="./Index">
-                    <i class="bi bi-x-lg me-1"></i>Clear
-                </a>
-            }
-        </form>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+                <h1 class="h3 mb-1">Genres</h1>
+                <div class="text-muted small">Manage the available game genres.</div>
+            </div>
 
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="btn btn-primary" asp-page="./Create">
-                <i class="bi bi-plus-lg me-2"></i>Create New Genre
-            </a>
-        }
+            <div class="d-flex flex-column flex-md-row align-items-md-center gap-2">
+                <form method="get" class="input-group" role="search" style="max-width: 520px;">
+                    <input name="q"
+                           value="@Request.Query["q"]"
+                           class="form-control"
+                           placeholder="Search genres"
+                           aria-label="Search genres" />
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+
+                    @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
+                    {
+                        <a class="btn btn-outline-secondary" asp-page="./Index" title="Clear search">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    }
+                </form>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-page="./Create">
+                        <i class="bi bi-plus-lg me-1"></i>Create Genre
+                    </a>
+                }
+            </div>
+        </div>
     </div>
 </div>
 
@@ -43,81 +52,54 @@
     <div class="alert alert-success">@ok</div>
 }
 
-<div class="card shadow-soft">
+<div class="card shadow-sm">
     <div class="card-body p-0">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-            <tr>
-                <th>Name</th>
-                <th class="text-end">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var g in Model.Genres)
-            {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
                 <tr>
-                    <td>@g.Name</td>
-                    <td class="text-end">
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div class="btn-group btn-group-sm">
-                                <a class="btn btn-outline-primary"
-                                   asp-page="./Edit" asp-route-id="@g.Id">
-                                    <i class="bi bi-pencil-square me-1"></i>Edit
-                                </a>
-                                <a class="btn btn-outline-danger"
-                                   asp-page="./Delete" asp-route-id="@g.Id">
-                                    <i class="bi bi-trash3 me-1"></i>Delete
-                                </a>
-                            </div>
-                        }
-                        else
-                        {
-                            <span class="text-muted">-</span>
-                        }
-                    </td>
+                    <th>Name</th>
+                    <th class="text-end text-muted">Actions</th>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var g in Model.Genres)
+                {
+                    <tr>
+                        <td>@g.Name</td>
+                        <td class="text-end">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Genre actions">
+                                    <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@g.Id">
+                                        <i class="bi bi-pencil-square me-1"></i>Edit
+                                    </a>
+                                    <a class="btn btn-outline-danger" asp-page="./Delete" asp-route-id="@g.Id">
+                                        <i class="bi bi-trash3 me-1"></i>Delete
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-@if (Model.TotalPages > 1)
+@if (!Model.Genres.Any())
 {
-    <nav class="mt-3" aria-label="Genres pagination">
-        <ul class="pagination justify-content-center">
-
-            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
-                <a class="page-link"
-                   asp-page="./Index"
-                   asp-route-pageNumber="@(Model.PageNumber - 1)"
-                   asp-route-q="@Request.Query["q"]">
-                    Previous
-                </a>
-            </li>
-
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link"
-                       asp-page="./Index"
-                       asp-route-pageNumber="@i"
-                       asp-route-q="@Request.Query["q"]">
-                        @i
-                    </a>
-                </li>
-            }
-
-            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
-                <a class="page-link"
-                   asp-page="./Index"
-                   asp-route-pageNumber="@(Model.PageNumber + 1)"
-                   asp-route-q="@Request.Query["q"]">
-                    Next
-                </a>
-            </li>
-
-        </ul>
-    </nav>
+    <div class="empty-state text-center mt-4">
+        <h5 class="mb-2">No genres found</h5>
+        <p class="text-muted mb-3">Try adjusting your search or add a new genre.</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-page="./Create">Create first genre</a>
+        }
+    </div>
 }

@@ -18,7 +18,69 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(13,110,253,.09), transparent 45%),
+    radial-gradient(900px 520px at 95% 5%, rgba(25,135,84,.08), transparent 50%),
+    #f3f6fb;
+  margin-bottom: 0;
+}
+
+/* Page wrapper so the background is visible around the container */
+.page-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(1400px 700px at 15% -10%, rgba(13,110,253,.10), transparent 45%),
+    radial-gradient(1000px 650px at 92% 0%, rgba(25,135,84,.09), transparent 45%);
+}
+
+main.container {
+  flex: 1;
+  background: transparent;
+}
+
+/* ==============================
+   Global polish (cards/tables/buttons/forms)
+   ============================== */
+
+.card {
+  border-radius: 1rem;
+  border: 0;
+  background: #fff;
+}
+
+.card.shadow-sm {
+  box-shadow:
+    0 1rem 2.5rem rgba(0,0,0,.06),
+    0 .25rem .5rem rgba(0,0,0,.04) !important;
+}
+
+.btn {
+  border-radius: .75rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: .75rem;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(13,110,253,.04);
+}
+
+.empty-state {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow:
+    0 1rem 2.5rem rgba(0,0,0,.06),
+    0 .25rem .5rem rgba(0,0,0,.04);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -131,4 +193,10 @@ section h3:has(+ hr) ~ div {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Better spacing for validation summaries */
+.validation-summary-errors ul {
+  margin-bottom: 0;
+  padding-left: 1.2rem;
 }

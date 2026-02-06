@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/VideoGameApp.styles.css" asp-append-version="true" />
 </head>
-<body class="bg-body-tertiary">
+<body>
+    <div class="page-wrap">
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
         <div class="container">
@@ -43,7 +44,7 @@
                         <a class="nav-link" asp-area="" asp-page="/Studios/Index"><i class="bi bi-building me-1"></i>Studios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-page="/Orders/Index"><i class="bi bi-receipt me-1"></i>My Orders</a>
+                        <a class="nav-link" asp-area="" asp-page="/Orders/Index"><i class="bi bi-receipt me-1"></i>My Orders</a>
                     </li>
                 </ul>
 
@@ -61,26 +62,24 @@
     </nav>
 </header>
 
-<main class="container py-4">
-    <div role="main">
-        @if (TempData["Success"] is string successMsg)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @successMsg
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+<main class="container py-4" role="main">
+    @if (TempData["Success"] is string successMsg)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @successMsg
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-        @if (TempData["Error"] is string errorMsg)
-        {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                @errorMsg
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+    @if (TempData["Error"] is string errorMsg)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @errorMsg
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-        @RenderBody()
-    </div>
+    @RenderBody()
 </main>
 
 <footer class="border-top bg-white">
@@ -95,5 +94,6 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
+    </div>
 </body>
 </html>

@@ -5,20 +5,24 @@
     ViewData["Title"] = "My Orders";
 }
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
-    <div>
-        <h1 class="display-6 mb-0">My Orders</h1>
-        <div class="text-muted small">Your purchase history and order details.</div>
-    </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+                <h1 class="h3 mb-1">My Orders</h1>
+                <div class="text-muted small">Your purchase history and order details.</div>
+            </div>
 
-    <a class="btn btn-outline-secondary" asp-page="/Games/Index">
-        <i class="bi bi-joystick me-2"></i>Browse games
-    </a>
+            <a class="btn btn-outline-secondary" asp-page="/Games/Index">
+                <i class="bi bi-joystick me-1"></i>Browse games
+            </a>
+        </div>
+    </div>
 </div>
 
-<form method="get" class="card shadow-soft mb-3">
+<form method="get" class="card shadow-sm mb-3">
     <div class="card-body">
-        <div class="row g-2 align-items-end">
+        <div class="row g-3 align-items-end">
             <div class="col-md-3">
                 <label class="form-label">Order ID</label>
                 <input name="orderId"
@@ -63,17 +67,17 @@
 
 @if (Model.Orders.Count == 0)
 {
-    <div class="alert alert-info d-flex align-items-center gap-2">
-        <i class="bi bi-info-circle"></i>
-        <div>You have no orders yet.</div>
+    <div class="empty-state text-center">
+        <h5 class="mb-2">No orders yet</h5>
+        <p class="text-muted mb-3">Once you complete a purchase, your orders will appear here.</p>
+        <a class="btn btn-primary" asp-page="/Games/Index">
+            <i class="bi bi-joystick me-1"></i>Start shopping
+        </a>
     </div>
-    <a class="btn btn-primary" asp-page="/Games/Index">
-        <i class="bi bi-joystick me-2"></i>Start shopping
-    </a>
 }
 else
 {
-    <div class="card shadow-soft">
+    <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -82,7 +86,7 @@ else
                         <th>Order #</th>
                         <th>Date</th>
                         <th class="text-end">Total</th>
-                        <th class="text-end">Actions</th>
+                        <th class="text-end text-muted">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,7 +99,8 @@ else
                             <td class="text-end">
                                 <a class="btn btn-sm btn-outline-secondary"
                                    asp-page="/Orders/Details"
-                                   asp-route-id="@o.Id">
+                                   asp-route-id="@o.Id"
+                                   title="View order details">
                                     <i class="bi bi-eye me-1"></i>Details
                                 </a>
                             </td>

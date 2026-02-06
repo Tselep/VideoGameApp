@@ -1,36 +1,41 @@
 @page
 @model VideoGameApp.Pages.Studios.IndexModel
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
-    <div>
-        <h1 class="display-6 mb-0">Studios</h1>
-        <div class="text-muted small">Manage the available game studios.</div>
-    </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+                <h1 class="h3 mb-1">Studios</h1>
+                <div class="text-muted small">Manage the available game studios.</div>
+            </div>
 
-    <div class="d-flex align-items-center gap-2">
-        <form method="get" class="input-group" role="search" style="width: 520px;">
-            <input name="q"
-                   value="@Request.Query["q"]"
-                   class="form-control"
-                   placeholder="Search Studios"
-                   aria-label="Search Studios" />
-            <button class="btn btn-outline-secondary" type="submit">
-                <i class="bi bi-search me-1"></i>Search
-            </button>
-            @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
-            {
-                <a class="btn btn-outline-secondary" asp-page="./Index">
-                    <i class="bi bi-x-lg me-1"></i>Clear
-                </a>
-            }
-        </form>
+            <div class="d-flex flex-column flex-md-row align-items-md-center gap-2">
+                <form method="get" class="input-group" role="search" style="max-width: 520px;">
+                    <input name="q"
+                           value="@Request.Query["q"]"
+                           class="form-control"
+                           placeholder="Search studios"
+                           aria-label="Search studios" />
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
 
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="btn btn-primary" asp-page="./Create">
-                <i class="bi bi-plus-lg me-2"></i>Create New Studio
-            </a>
-        }
+                    @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
+                    {
+                        <a class="btn btn-outline-secondary" asp-page="./Index" title="Clear search">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    }
+                </form>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-page="./Create">
+                        <i class="bi bi-plus-lg me-1"></i>Create Studio
+                    </a>
+                }
+            </div>
+        </div>
     </div>
 </div>
 
@@ -43,42 +48,56 @@
     <div class="alert alert-success">@ok</div>
 }
 
-<div class="card shadow-soft">
+<div class="card shadow-sm">
     <div class="card-body p-0">
-<table class="table table-hover align-middle mb-0">
-    <thead class="table-light">
-    <tr>
-        <th>Name</th>
-        <th>Country</th>
-        <th class="text-end">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var s in Model.Studios)
-    {
-        <tr>
-            <td>@s.Name</td>
-            <td>@s.Country</td>
-            <td class="text-end">
-                @if (User.IsInRole("Admin"))
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th class="text-end text-muted">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var s in Model.Studios)
                 {
-                    <div class="btn-group btn-group-sm" role="group">
-                        <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@s.Id">
-                            <i class="bi bi-pencil-square me-1"></i>Edit
-                        </a>
-                        <a class="btn btn-outline-danger" asp-page="./Delete" asp-route-id="@s.Id">
-                            <i class="bi bi-trash3 me-1"></i>Delete
-                        </a>
-                    </div>
+                    <tr>
+                        <td>@s.Name</td>
+                        <td>@s.Country</td>
+                        <td class="text-end">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Studio actions">
+                                    <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@s.Id">
+                                        <i class="bi bi-pencil-square me-1"></i>Edit
+                                    </a>
+                                    <a class="btn btn-outline-danger" asp-page="./Delete" asp-route-id="@s.Id">
+                                        <i class="bi bi-trash3 me-1"></i>Delete
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <span class="text-muted">-</span>
-                }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+@if (!Model.Studios.Any())
+{
+    <div class="empty-state text-center mt-4">
+        <h5 class="mb-2">No studios found</h5>
+        <p class="text-muted mb-3">Try adjusting your search or add a new studio.</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-page="./Create">Create first studio</a>
+        }
+    </div>
+}

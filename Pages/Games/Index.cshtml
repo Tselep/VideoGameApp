@@ -1,118 +1,135 @@
 @page
 @model VideoGameApp.Pages.Games.IndexModel
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
-    <div>
-        <h1 class="display-6 mb-0">Games</h1>
-        <div class="text-muted small">Browse the catalog and add games to your cart.</div>
-    </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+                <h1 class="h3 mb-1">Games</h1>
+                <div class="text-muted small">Browse the catalog and add games to your cart.</div>
+            </div>
 
-    <div class="d-flex align-items-center">
-        <form method="get" class="input-group" role="search" style="width: 600px;">
-            <input name="q"
-                   value="@Request.Query["q"]"
-                   class="form-control"
-                   placeholder="Search Games · Genres · Studios · Orders"
-                   title="Search Games, Genres, Studios, Orders"
-                   aria-label="Search" />
-            <button class="btn btn-outline-secondary" type="submit">
-                <i class="bi bi-search me-1"></i>Search
-            </button>
+            <div class="d-flex flex-column flex-md-row align-items-md-center gap-2">
+                <form method="get" class="input-group" role="search" style="max-width: 520px;">
+                    <input name="q"
+                           value="@Request.Query["q"]"
+                           class="form-control"
+                           placeholder="Search Anything"
+                           aria-label="Search" />
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
 
-            @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
-            {
-                <a class="btn btn-outline-secondary" asp-page="./Index">
-                    <i class="bi bi-x-lg me-1"></i>Clear
-                </a>
-            }
-        </form>
-
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="btn btn-primary" asp-page="Create">
-                <i class="bi bi-plus-lg me-2"></i>Create New Game
-            </a>
-        }
-    </div>
-</div>
-
-<div class="card shadow-soft">
-    <div class="card-body p-0">
-<table class="table table-hover align-middle mb-0">
-<thead class="table-light">
-<tr>
-    <th>Title</th>
-    <th>Genre</th>
-    <th>Studio</th>
-    <th class="text-end">Price</th>
-    <th>Release Date</th>
-    <th class="text-end">Actions</th>
-    <th class="text-end">Buy</th>
-</tr>
-</thead>
-    <tbody>
-    @foreach (var g in Model.Games)
-    {
-        <tr>
-            <td>@g.Title</td>
-            <td>
-                @if (!string.IsNullOrWhiteSpace(g.Genre?.Name))
-                {
-                    <span class="badge rounded-pill text-bg-light border">@g.Genre!.Name</span>
-                }
-                else
-                {
-                    <span class="text-muted">-</span>
-                }
-            </td>
-            <td>
-                @if (!string.IsNullOrWhiteSpace(g.Studio?.Name))
-                {
-                    <span class="badge rounded-pill text-bg-light border">@g.Studio!.Name</span>
-                }
-                else
-                {
-                    <span class="text-muted">-</span>
-                }
-            </td>
-            <td class="text-end">
-                @($"{g.Price:0.00} €")
-            </td>
-            <td>@(g.ReleaseDate.HasValue ? g.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</td>
-            <td class="text-end">
-                <div class="btn-group btn-group-sm" role="group">
-                    <a class="btn btn-outline-secondary" asp-page="Details" asp-route-id="@g.Id">
-                        <i class="bi bi-eye me-1"></i>Details
-                    </a>
-
-                    @if (User.IsInRole("Admin"))
+                    @if (!string.IsNullOrWhiteSpace(Request.Query["q"]))
                     {
-                        <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">
-                            <i class="bi bi-pencil-square me-1"></i>Edit
-                        </a>
-                        <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@g.Id">
-                            <i class="bi bi-trash3 me-1"></i>Delete
+                        <a class="btn btn-outline-secondary" asp-page="./Index" title="Clear search">
+                            <i class="bi bi-x-lg"></i>
                         </a>
                     }
-                </div>
-            </td>
-            <td class="text-end">
-                <form method="post" asp-page="/Cart/Add" class="d-inline">
-                    <input type="hidden" name="gameId" value="@g.Id" />
-                    <input type="hidden" name="title" value="@g.Title" />
-                    <input type="hidden" name="unitPrice" value="@g.Price" />
-                    <input type="hidden" name="imageUrl" value="" />
-                    <input type="hidden" name="qty" value="1" />
-                    <button type="submit" class="btn btn-sm btn-success">
-                        <i class="bi bi-cart-plus me-1"></i>Add
-                    </button>
                 </form>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-page="Create">
+                        <i class="bi bi-plus-lg me-1"></i>Create Game
+                    </a>
+                }
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Studio</th>
+                        <th class="text-end">Price</th>
+                        <th>Release Date</th>
+                        <th class="text-end text-muted">Actions</th>
+                        <th class="text-end text-muted">Buy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var g in Model.Games)
+                    {
+                        <tr>
+                            <td>@g.Title</td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(g.Genre?.Name))
+                                {
+                                    <span class="badge rounded-pill text-bg-light border">@g.Genre!.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(g.Studio?.Name))
+                                {
+                                    <span class="badge rounded-pill text-bg-light border">@g.Studio!.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                @($"{g.Price:0.00} €")
+                            </td>
+                            <td>@(g.ReleaseDate.HasValue ? g.ReleaseDate.Value.ToString("yyyy-MM-dd") : "-")</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Row actions">
+                                    <a class="btn btn-outline-secondary" asp-page="Details" asp-route-id="@g.Id">
+                                        <i class="bi bi-eye me-1"></i>Details
+                                    </a>
+
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@g.Id">
+                                            <i class="bi bi-pencil-square me-1"></i>Edit
+                                        </a>
+                                        <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@g.Id">
+                                            <i class="bi bi-trash3 me-1"></i>Delete
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <form method="post" asp-page="/Cart/Add" class="d-inline">
+                                    <input type="hidden" name="gameId" value="@g.Id" />
+                                    <input type="hidden" name="title" value="@g.Title" />
+                                    <input type="hidden" name="unitPrice" value="@g.Price" />
+                                    <input type="hidden" name="imageUrl" value="" />
+                                    <input type="hidden" name="qty" value="1" />
+                                    <button type="submit" class="btn btn-sm btn-success" title="Add to cart">
+                                        <i class="bi bi-cart-plus me-1"></i>Add
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Games.Any())
+{
+    <div class="empty-state text-center mt-4">
+        <h5 class="mb-2">No games found</h5>
+        <p class="text-muted mb-3">Try adjusting your search or add a new game.</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-page="Create">Create first game</a>
+        }
+    </div>
+}
 
 @if (Model.TotalPages > 1)
 {

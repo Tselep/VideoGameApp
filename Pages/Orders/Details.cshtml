@@ -3,29 +3,41 @@
 
 @if (Model.Order is null)
 {
-    <div class="alert alert-danger">Order not found.</div>
-    <a class="btn btn-outline-secondary" asp-page="./Index">
-        <i class="bi bi-arrow-left me-2"></i>Back
-    </a>
+    <div class="empty-state text-center">
+        <h5 class="mb-2">Order not found</h5>
+        <p class="text-muted mb-3">The requested order does not exist or was removed.</p>
+        <a class="btn btn-outline-secondary" asp-page="./Index">
+            <i class="bi bi-arrow-left me-1"></i>Back to orders
+        </a>
+    </div>
     return;
 }
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
-    <div>
-        <h1 class="display-6 mb-0">Order #@Model.Order.Id</h1>
-        <div class="text-muted small">
-            Placed on @Model.Order.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, HH:mm")
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+                <h1 class="h3 mb-1">Order #@Model.Order.Id</h1>
+                <div class="text-muted small">
+                    Placed on @Model.Order.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, HH:mm")
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+                <a class="btn btn-outline-secondary" asp-page="./Index">
+                    <i class="bi bi-arrow-left me-1"></i>Back to orders
+                </a>
+                <a class="btn btn-outline-secondary" asp-page="/Games/Index">
+                    <i class="bi bi-joystick me-1"></i>Browse games
+                </a>
+            </div>
         </div>
     </div>
-
-    <a class="btn btn-outline-secondary" asp-page="./Index">
-        <i class="bi bi-arrow-left me-2"></i>Back to orders
-    </a>
 </div>
 
 <div class="row g-3">
     <div class="col-lg-8">
-        <div class="card shadow-soft">
+        <div class="card shadow-sm">
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -42,9 +54,9 @@
                         {
                             <tr>
                                 <td class="fw-semibold">@it.Game.Title</td>
-                                <td class="text-end">@it.UnitPrice.ToString("0.00") €</td>
+                                <td class="text-end">@($"{it.UnitPrice:0.00} €")</td>
                                 <td class="text-end">@it.Quantity</td>
-                                <td class="text-end fw-semibold">@((it.UnitPrice * it.Quantity).ToString("0.00")) €</td>
+                                <td class="text-end fw-semibold">@($"{(it.UnitPrice * it.Quantity):0.00} €")</td>
                             </tr>
                         }
                         </tbody>
@@ -55,7 +67,7 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card shadow-soft">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h5 class="mb-3">Order Summary</h5>
 
@@ -73,13 +85,9 @@
 
                 <div class="d-flex justify-content-between fs-5">
                     <span class="text-muted">Total</span>
-                    <strong>@Model.Order.TotalPrice.ToString("0.00") €</strong>
+                    <strong>@($"{Model.Order.TotalPrice:0.00} €")</strong>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<a class="btn btn-outline-primary mt-3" asp-page="/Games/Index">
-    <i class="bi bi-joystick me-2"></i>Continue shopping
-</a>
